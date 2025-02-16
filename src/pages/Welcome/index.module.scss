@@ -1,0 +1,195 @@
+
+.container {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+  height: 100vh;
+  background-color: #eff6ff;
+  
+  width: 100%;
+  h1 {
+
+    text-align: left;
+    color: #003366;
+    margin-top: 8vh;
+    margin-bottom: 5vh;
+    width: 45vw;
+    font-weight: 600;
+    font-size: 3vw; /* 进一步缩小字体大小 */
+  }
+  .home{
+    margin-left: 50px;
+    
+  }
+  p {
+
+    text-align: left;
+    color: #000000;
+    margin-top: 0;
+    margin-bottom: 12vh;
+    width: 35vw;
+    font-size: 1.2vw; /* 进一步缩小字体大小 */
+    line-height: 2;
+  }
+
+  .useButton {
+ 
+    border-radius: 8px;
+    background-color: #6ca2f5;
+    color: #ffffff;
+    border: none;
+    width: 15vw;
+    // padding: 1.8vh 3.5vw;
+    font-size: 1.4vw; /* 按钮字体大小进一步缩小 */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 18vh;
+    &:hover {
+      background-color: #003366;
+    }
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+ 
+    ul {
+      display: flex;
+      flex-direction: row;
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+    }
+
+    li {
+      margin-right: 1.8vw; /* 列表项之间的间隔进一步减小 */
+      font-size: 1vw; /* 列表字体大小进一步减小 */
+      white-space: nowrap;
+      color: #000000;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 2560px) {
+  h1 {
+    width: 70vw;
+    font-size: 2.2vw;
+  }
+
+  p {
+    width: 50vw;
+    font-size: 1.4vw;
+  }
+
+  button {
+    font-size: 1.4vw;
+  }
+
+  .footer {
+    ul {
+      flex-direction: column;
+    }
+
+    li {
+      margin-bottom: 1vh;
+    }
+  }
+}
+
+@media (max-width: 1920px) {
+  h1 {
+    width: 80vw;
+    font-size: 2.0vw;
+  }
+
+  p {
+    width: 70vw;
+    font-size: 1.3vw;
+  }
+
+  button {
+    font-size: 1.2vw;
+    padding: 1.4vh 3vw;
+  }
+
+  .footer {
+    padding-left: 4vw;
+  }
+}
+
+@media (max-width: 1366px) {
+  h1 {
+    width: 90vw;
+    font-size: 1.7vw;
+  }
+
+  p {
+    width: 80vw;
+    font-size: 1.2vw;
+  }
+
+  button {
+    font-size: 1.2vw;
+    padding: 1vh 2.5vw;
+  }
+
+  .footer {
+    padding-left: 2vw;
+  }
+}
+
+@media (max-width: 1024px) {
+  h1 {
+    width: 100vw;
+    font-size: 1.6vw;
+  }
+
+  p {
+    width: 90vw;
+    font-size: 1.1vw;
+  }
+
+  button {
+    font-size: 1.3vw;
+    padding: 1vh 2vw;
+  }
+
+  .footer {
+    padding-left: 1.5vw;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    width: 100vw;
+    font-size: 1.8rem; /* 在小屏幕上适当调整为rem单位 */
+  }
+
+  p {
+    width: 100vw;
+    font-size: 1.1rem;
+  }
+
+  button {
+    font-size: 1.1rem;
+    padding: 1vh 1.8vw;
+  }
+
+  .footer {
+    padding-left: 1.5vw;
+    ul {
+      flex-direction: column;
+    }
+
+    li {
+      margin-bottom: 1vh;
+    }
+  }
+}

@@ -1,0 +1,256 @@
+@import './contants.scss';
+
+@font-face {
+  font-family: 'Garamond';
+  src: url('../fonts/EBGaramond-VariableFont_wght.ttf') format('truetype');
+}
+//@font-face {
+//  font-family: 'Garamond';
+//  src: url('../fonts/Roboto-Regular.ttf') format('truetype');
+//}
+
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('../fonts/OpenSans-VariableFont_wdth,wght.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'MyLogoFont';
+  src: url('../fonts/SairaCondensed-Bold.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'MyLogoFont2';
+  src: url('../fonts/龙书势如破竹简.ttf') format('truetype');
+}
+
+:root {
+  //font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Garamond', sans-serif;
+  line-height: 1.5;
+  font-size: 16px;
+  font-weight: 400;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+//body {
+//  margin: 0;
+  //display: flex;
+  //place-items: center;
+  //min-width: 1200px;
+  //min-height: 100vh;
+//}
+body {
+  min-height: 100vh;
+  margin: 0;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+// button {
+//   border-radius: 8px;
+//   border: 1px solid transparent;
+//   padding: 0.6em 1.2em;
+//   font-size: 1em;
+//   font-weight: 500;
+//   font-family: inherit;
+//   background-color: #1a1a1a;
+//   cursor: pointer;
+//   transition: border-color 0.25s;
+// }
+// button:hover {
+//   border-color: #646cff;
+// }
+// button:focus,
+// button:focus-visible {
+//   outline: 4px auto -webkit-focus-ring-color;
+// }
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  // button {
+  //   padding: 10px 20px;
+  //   border: none;
+  //   border-radius: 20px; // 增加圆角
+  //   background-color: #1890ff;
+  //   color: #ffffff;
+  //   width: 90%; 
+  //   margin-top: 10px;
+  //   align-items: center;
+  //   &:hover {
+  //     background-color: #003366;
+  //   }
+  // }
+}
+
+::-webkit-scrollbar {
+  width: 0.4rem;
+}
+::-webkit-scrollbar-thumb {
+  background: #d4d4d4;
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #909399;
+}
+
+//增加
+.innerWidth {
+  @media (min-width: $xl) {
+    max-width: 1150px;
+    margin: auto;
+  }
+
+  width: 100%;
+}
+
+.paddings {
+  @media (min-width: $sm) {
+    padding: 4rem;
+  }
+
+
+  @media (min-width: $xl),
+  (min-width: $md) {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1.5rem;
+}
+
+
+
+.xPaddings {
+  @media (min-width: $sm) {
+    padding-left: 4rem;
+    padding-right: 4rem;
+  }
+
+  padding-left: 1.5rem;
+  /* 24px */
+  padding-right: 1.5rem;
+  /* 24px */
+}
+
+.yPaddings {
+  @media (min-width: $sm) {
+    padding-top: 4rem;
+    padding-bottom: 4rem;
+  }
+
+  @media (min-width: $xl) {
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+  }
+
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
+.topPaddings {
+  @media (min-width : $sm) {
+    padding-top: 4rem;
+  }
+
+  @media (min-width: $xl) {
+    padding-top: 2rem;
+  }
+
+  padding-top: 3rem;
+}
+
+
+.bottomPaddings {
+  @media (min-width : $sm) {
+    padding-bottom: 4rem;
+  }
+
+  @media (min-width: $xl) {
+    padding-bottom: 2rem;
+  }
+
+  padding-bottom: 3rem;
+}
+
+
+.flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.flexStart {
+  display: flex;
+  justify-content: start;
+  align-items: center;
+}
+
+.flexEnd {
+  display: flex;
+  justify-items: end;
+}
+
+.primaryText {
+  @media (max-width: $sm) {
+    font-size: 2.5rem;
+  }
+  font-size: 3rem;
+  font-weight: bold;
+}
+
+.secondaryText {
+  @media (max-width: $sm) {
+    font-size: 1.1rem;
+    line-height: 40px;
+  }
+  line-height: 50px;
+  font-size: 1.3rem;
+  font-weight: 500
+}
+.anchor {
+  display: block;
+  position: relative;
+  top: -100px;
+  visibility: hidden;
+}
+
+.ant-form,
+.ant-table-content,
+.ant-btn,
+.ant-menu,
+.ant-collapse{
+  font-family: 'Garamond', sans-serif;
+}
+.ant-table-cell{
+  padding: 5px 15px;
+}
+
+
+
+

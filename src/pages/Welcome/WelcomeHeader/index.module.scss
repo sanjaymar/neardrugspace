@@ -1,0 +1,66 @@
+@media (max-width: 800px) {
+  .nav{
+    padding: 0 20px;
+    
+    .drop{
+      height: 0;
+    }
+  }
+}
+
+@keyframes lineStretch {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  height: 80px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  .logo {
+    margin-left: 50px;
+    font-family: 'MyLogoFont' , sans-serif;
+    color: lighten(#003366, 10%); // 使深蓝色更亮一些
+    font-size: 2.5rem;
+    font-weight: bold;
+  }
+
+  .navItems {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1rem;
+
+    .navigationItem {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      height: 80px;
+      cursor: pointer;
+      .navText {
+        margin-left: 8px;
+      }
+      .experienceButton {
+        width: 100px; /* 设置按钮宽度 */
+        color: #003366; /* 主题蓝色 */
+        border-style: solid; /* 设置边框样式为实线 */
+        border-color: #003366; /* 主题蓝色细框 */
+        background-color: transparent; /* 无填充色 */
+        margin-right: 30px;  
+      }
+    }
+   
+  }
+
+ 
+}
