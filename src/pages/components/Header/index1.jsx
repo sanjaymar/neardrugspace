@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router';
 
 function Header1(props) {
   const navigate = useNavigate();
-  const [activeTab, setActiveTab] = useState('/main'); // 默认选中任务中心
+  const [activeTab, setActiveTab] = useState('/task'); // 默认选中任务中心
 
   const toUser = () => {
     setActiveTab('/user'); // 更新选中状态
@@ -19,8 +19,8 @@ function Header1(props) {
   };
 
   const toTask = () => {
-    setActiveTab('/main'); // 更新选中状态
-    navigate('/main');
+    setActiveTab('/task'); // 更新选中状态
+    navigate('/task');
   };
 
   const toLanguage = () => {
@@ -39,7 +39,7 @@ function Header1(props) {
           <li className={`${headstyles.navItem} ${activeTab === '/markdown' && headstyles.active}`} onClick={toWork}>
             <FaTh /> 工作空间
           </li>
-          <li className={`${headstyles.navItem} ${activeTab === '/main' && headstyles.active}`} onClick={toTask}>
+          <li className={`${headstyles.navItem} ${activeTab === '/task' && headstyles.active}`} onClick={toTask}>
             <FaBell /> 任务中心
           </li>
           <li className={`${headstyles.navItem} ${activeTab === '/language' && headstyles.active}`} onClick={toLanguage}>

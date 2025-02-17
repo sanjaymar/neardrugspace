@@ -422,6 +422,13 @@
   resolved "https://registry.npmjs.org/@humanwhocodes/object-schema/-/object-schema-2.0.3.tgz"
   integrity sha512-93zYdMES/c1D69yZiKDBj0V24vqNzB/koF26KPaagAfd3P/4gUlh3Dys5ogAK+Exi9QyzlD8x/08Zt7wIKcDcA==
 
+"@iktakahiro/markdown-it-katex@^4.0.1":
+  version "4.0.1"
+  resolved "https://registry.npmjs.org/@iktakahiro/markdown-it-katex/-/markdown-it-katex-4.0.1.tgz"
+  integrity sha512-kGFooO7fIOgY34PSG8ZNVsUlKhhNoqhzW2kq94TNGa8COzh73PO4KsEoPOsQVG1mEAe8tg7GqG0FoVao0aMHaw==
+  dependencies:
+    katex "^0.12.0"
+
 "@jridgewell/gen-mapping@^0.3.5":
   version "0.3.8"
   resolved "https://registry.npmjs.org/@jridgewell/gen-mapping/-/gen-mapping-0.3.8.tgz"
@@ -1610,6 +1617,11 @@ comma-separated-tokens@^2.0.0:
   version "2.0.3"
   resolved "https://registry.npmjs.org/comma-separated-tokens/-/comma-separated-tokens-2.0.3.tgz"
   integrity sha512-Fu4hJdvzeylCfQPp9SGWidpzrMs7tTrlu6Vb8XGaRGck8QSNZJJp538Wrb60Lax4fPwR64ViY468OIUTbRlGZg==
+
+commander@^2.19.0:
+  version "2.20.3"
+  resolved "https://registry.npmjs.org/commander/-/commander-2.20.3.tgz"
+  integrity sha512-GpVkmM8vF2vQUkj2LvZmD35JxeJOLCwJ9cUkugyk2nuhbv3+mJvpLYYt+0+USMxE+oj+ey/lJEnhZw75x/OMcQ==
 
 commander@^2.20.0:
   version "2.20.3"
@@ -3309,6 +3321,13 @@ json5@^2.2.3:
     object.assign "^4.1.4"
     object.values "^1.1.6"
 
+katex@^0.12.0:
+  version "0.12.0"
+  resolved "https://registry.npmjs.org/katex/-/katex-0.12.0.tgz"
+  integrity sha512-y+8btoc/CK70XqcHqjxiGWBOeIL8upbS0peTPXTvgrh21n1RiWWcIpSWM+4uXq+IAgNh9YYQWdc7LVDPDAEEAg==
+  dependencies:
+    commander "^2.19.0"
+
 katex@^0.16.11:
   version "0.16.21"
   resolved "https://registry.npmjs.org/katex/-/katex-0.16.21.tgz"
@@ -3437,6 +3456,7 @@ lru-cache@^5.1.1:
   resolved "file:"
   dependencies:
     "@ant-design/icons" "^5.2.6"
+    "@iktakahiro/markdown-it-katex" "^4.0.1"
     "@react-pdf-viewer/core" "^3.12.0"
     antd "^5.21.3"
     axios "^1.6.2"
@@ -4198,6 +4218,7 @@ natural-compare@^1.4.0:
   resolved "file:"
   dependencies:
     "@ant-design/icons" "^5.2.6"
+    "@iktakahiro/markdown-it-katex" "^4.0.1"
     "@react-pdf-viewer/core" "^3.12.0"
     antd "^5.21.3"
     axios "^1.6.2"

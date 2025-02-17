@@ -1,0 +1,50 @@
+.allcontainer {
+  width: 100%;
+  height: 90vh;
+  display: flex;
+  justify-content: space-around;
+  align-items: flex-start;
+  padding: 20px;
+  background-color: #f8f9fa;
+  
+  .draggerCustom {
+    flex: 1;
+    height: 85vh; // 保持上传框的高度
+    width: 20%; // 让拖拽区域占满左侧容器的全部宽度
+    border: 2px dashed #d9d9d9;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 20px;
+    cursor: pointer;
+    transition: border-color 0.3s;
+
+    &:hover {
+      border-color: #1890ff;
+    }
+
+  .ant-card-head {
+    background-color: #003366;
+    color: #fff;
+    border-radius: 8px 8px 0 0;
+    width: 40%;
+  }
+}
+.right{
+  flex:2;
+  height: 80vh;
+  overflow-x: auto;
+  .editor{
+    height: 80vh;
+    flex:2;
+
+  }
+  button{
+    margin: 10px 0;
+    width: 100%;
+  }
+  
+}
+}
+ 
