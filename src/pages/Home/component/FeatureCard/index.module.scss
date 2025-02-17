@@ -1,0 +1,79 @@
+.card {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s;
+  height: 30vh;
+  width: 40vw;
+  position: relative; // 添加相对定位以便按钮绝对定位
+  .title {
+    color: #333333;
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+    font-weight: bolder;
+  }
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  .cardcontent {
+    display: flex;
+    align-items: stretch; // 使左右两侧高度一致
+    width: 100%;
+
+    .left {
+      flex: 2;
+      display: flex;
+      flex-direction: column;
+
+      .list {
+        padding-left: 1.5rem;
+        // margin-bottom: 2rem;
+        line-height: 1.6;
+        list-style: disc;
+
+        li {
+          margin-bottom: 0.8rem;
+          color: #34495e;
+        }
+      }
+
+      .button-container {
+        display: flex;
+        justify-content: flex-start; // 按钮左对齐
+        margin-top: auto; // 将按钮上移至左侧区域顶部
+      }
+
+      .button {
+        background: #3498db;
+        color: white;
+        padding: 0.5rem 1rem; // 缩小按钮尺寸
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background 0.2s;
+        width: 30%;
+        &:hover {
+          background: #2980b9;
+        }
+      }
+    }
+
+    .right {
+      flex: 1;
+      display: flex;
+      justify-content: center; // 图片水平居中
+      align-items: center; // 图片垂直居中
+      padding-left: 10px; // 移除默认填充
+      padding-bottom: 20px; // 移除默认填充
+      margin-top: -30px;
+      img {
+        width: 80%; // 图片宽度填满右侧区域
+        height: 70%; // 高度自动调整以保持图片比例
+        max-height: 100%; // 确保图片不会超出容器高度
+      }
+    }
+  }
+}

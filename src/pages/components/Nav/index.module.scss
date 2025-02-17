@@ -1,0 +1,46 @@
+.nav {
+  background-color: #A2D4FF;
+  width: 3vw;
+  height: 80vh;
+  margin-top: 3vh;
+  position: relative;
+  border-radius: 2vw;
+  overflow: hidden;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    li{
+      margin-top: 1vh;
+    }
+  }
+
+  .navItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom: 2vh; /* Add space between items */
+  }
+
+  .link {
+    color: white;
+    text-decoration: none;
+    margin-top: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+
+    
+    .icon {
+      font-size: 1.8vw; /* 增大图标的大小 */
+      &:hover {
+        color: #336699; /* 调整颜色 */
+      }
+  
+    }
+  }
+}

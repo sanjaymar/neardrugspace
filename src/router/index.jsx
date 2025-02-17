@@ -2,11 +2,13 @@ import { Navigate, useRoutes } from 'react-router-dom';
 // 正确的导入方式
 import Main from '../pages/Main';
 import CreateTask from '../pages/Main/CreateTask';
-import Welcome from '../pages/Welcome';
+import Welcome from '../pages/Welcome';       //欢迎界面
 import WelcomeHeader from '../pages/Welcome/WelcomeHeader';
-import Login from '../pages/Login';
-import Register from '../pages/Register';
-import User from '../pages/User';
+import Login from '../pages/Login';           //登录界面
+import Register from '../pages/Register';     //注册界面
+import User from '../pages/User';          //用户界面
+import Layout from '../pages/Home/Layout';    //任务中心布局界面
+import Home from '../pages/Home';             //任务中心介绍界面
 const RenderRouter = () => {
   const element = useRoutes([
     {
@@ -40,6 +42,16 @@ const RenderRouter = () => {
             element: <  CreateTask />,
         }
     ]
+  },
+  {
+    path: "/home",
+    element: <Layout />,
+    children: [
+      {
+        index: true,
+        element: <Home />,
+      },
+    ],
   },
   {
     path: "*",

@@ -4,10 +4,10 @@
   font-family: 'Garamond';
   src: url('../fonts/EBGaramond-VariableFont_wght.ttf') format('truetype');
 }
-//@font-face {
-//  font-family: 'Garamond';
-//  src: url('../fonts/Roboto-Regular.ttf') format('truetype');
-//}
+@font-face {
+ font-family: 'Garamond';
+ src: url('../fonts/Roboto-Regular.ttf') format('truetype');
+}
 
 @font-face {
   font-family: 'MyCustomFont';
@@ -16,7 +16,7 @@
 
 @font-face {
   font-family: 'MyLogoFont';
-  src: url('../fonts/SairaCondensed-Bold.ttf') format('truetype');
+  src: url('../fonts/EBGaramond-VariableFont_wght.ttf') format('truetype');
 }
 @font-face {
   font-family: 'MyLogoFont2';

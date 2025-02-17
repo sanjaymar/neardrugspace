@@ -1,0 +1,53 @@
+.taskheader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1vh 1vw; /* 使用vh和vw单位，确保适应屏幕 */
+  height: 6vh; /* 使用vh单位，确保高度响应式 */
+  background-color: #ffffff; /* 灰色背景 */
+  color: #333; /* 文字颜色 */
+  .logo {
+    margin-left: 2vw; /* 使用vw单位，确保logo距离左侧自适应 */
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-weight: bolder;
+    color: #006bc9;
+    font-size: 1.5vw; /* 使用vw单位调整logo字体大小 */
+    width: 40vw;
+    
+  }
+  ul{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 30vw;
+    font-size: 1vw; /* 使用vw单位调整字体大小 */
+  .navItem {
+    padding: 1vh 1vw; /* 使用vh和vw单位，适配不同屏幕 */
+    width: 7vw;
+    color: #666; /* 灰色文字 */
+    // font-size: 1.2vw; /* 使用vw单位调整字体大小 */
+    cursor: pointer;
+    transition: color 0.3s ease;
+    
+
+    &:hover {
+      color: #1890ff; /* 鼠标悬浮时蓝色 */
+    }
+
+    &.active {
+      color: #1890ff; /* 选中状态下的文字颜色 */
+    }
+
+  svg {
+    margin-right: 0.2vw; /* 调整图标和文字之间的距离，使用vw单位 */
+    vertical-align: middle;
+    margin-top: -0.3vh;
+  }
+  &:last-child {
+    margin-right: 0; /* 最后一个导航项没有右间距 */
+  }
+
+
+}
+}
+}

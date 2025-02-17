@@ -1,0 +1,87 @@
+.moreFeatures {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 40vw; // 保持宽度为视口宽度的40%
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  position: relative; // 为子元素定位提供上下文
+  overflow: hidden; // 防止内容溢出
+
+  p {
+    color: #000000;
+    font-size: 1.1rem;
+    margin-top: 1rem;
+  }
+}
+
+.iconWrapper {
+  width: 100px;
+  height: 100px;
+  // background: #fff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+  position: relative;
+  // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.cloverWindmill {
+  width: 65px;
+  height: 65px;
+  position: relative;
+  animation: spin 8s linear infinite;
+
+  div {
+    position: absolute;
+    width: 50%;
+    height: 50%;
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+    border-radius: 100% 0;
+    transform-origin: right bottom;
+  }
+
+  .leaf1 {
+    top: 0;
+    left: 0;
+  }
+
+  .leaf2 {
+    top: 0;
+    right: 0;
+    transform: rotate(90deg);
+    background: linear-gradient(135deg, #3498db, #2980b9);
+  }
+
+  .leaf3 {
+    bottom: 0;
+    right: 0;
+    transform: rotate(180deg);
+    background: linear-gradient(135deg, #1abc9c, #16a085);
+  }
+
+  .leaf4 {
+    bottom: 0;
+    left: 0;
+    transform: rotate(270deg);
+    background: linear-gradient(135deg, #3498db, #2980b9);
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+.title {
+  color: #16a085; // 调整为蓝绿色调
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  font-weight: 600; // 增加字体权重
+}
