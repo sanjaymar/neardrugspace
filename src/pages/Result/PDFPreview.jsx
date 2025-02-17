@@ -19,7 +19,7 @@ function PDFPreview({ url }) {
   };
   
   return (
-    <div >
+    <div>
       <Document
         file={{ url }}
         onLoadSuccess={onDocumentLoadSuccess}

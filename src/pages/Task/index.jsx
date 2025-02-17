@@ -3,13 +3,13 @@ import mainstyles from './index.module.scss';
 import { useNavigate } from 'react-router-dom';
 import { Upload, Button, Form, message, Table } from 'antd';
 import { UploadOutlined } from '@ant-design/icons';
-import TopNav from './TopNav/index.jsx';
+import TopNav from './TopNav';
 import PDFPreview from './PDFPreview.jsx';
 import { AiOutlineEdit, AiFillStar, AiOutlineStar } from 'react-icons/ai';
 import { CheckCircleOutlined, CloseCircleOutlined } from '@ant-design/icons';
 const { Dragger } = Upload;
 
-function Task() {
+function Task() { 
   const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [markdown, setMarkdown] = useState('');
@@ -82,7 +82,7 @@ function Task() {
         // Refetch task data
         handleSearch(token);  // Fetch the updated task data
         setSelectedTab('results'); // Update selected tab after fetching
-        navigate('/task/results'); // Navigate to results
+        navigate('/results'); // Navigate to results
       } else {
         message.error(data.msg || "发生错误");
       }

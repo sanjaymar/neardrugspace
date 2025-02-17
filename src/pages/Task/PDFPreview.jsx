@@ -4,7 +4,7 @@ import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css'; // 确保文本层不会多余显示
 
 // 设置 worker 路径为本地静态文件
-pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js?v=' + process.env.REACT_APP_VERSION;
+pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
 
 function PDFPreview({ file }) {
   const [numPages, setNumPages] = useState(null);

@@ -108,19 +108,14 @@ function MarkDown() {
 
   return (
     <div className={markdownstyles.allcontainer}>
-        <Dragger
-          fileList={file ? [{ uid: '-1', name: file, status: 'done' }] : []}
-          className={markdownstyles.draggerCustom}
-          showUploadList={false}
-        >
-          {file ? (
-            <PDFPreview url={`http://172.20.137.175:90/files/${file}`} />
-          ) : (
-            <p className="ant-upload-drag-icon">
-              {/* <UploadOutlined /> */}
-            </p>
-          )}
-        </Dragger>
+          <Dragger
+        fileList={file ? [{ uid: '-1', name: file, status: 'done' }] : []}
+        className={markdownstyles.draggerCustom}
+        showUploadList={false}
+        disabled
+      >
+          <PDFPreview url={`http://172.20.137.175:90/files/${file}`} />
+      </Dragger>
 
       <div className={markdownstyles.right}>
         <MdEditor

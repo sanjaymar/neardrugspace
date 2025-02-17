@@ -1,0 +1,251 @@
+//页面整体
+.allcontainer {
+  width:100vw;
+  display: flex;
+  align-items: flex-start;
+  padding:1vw;
+  background-color: #f8f9fa;
+  margin-top: 1vh;
+}
+//页面左侧
+.left{
+  flex: 1;
+  margin: 1vw;
+  height: 80vh;
+  .draggerCustom {
+    height: 80vh; // 保持上传框的高度
+    width:40vw; 
+    border: 2px dashed #d9d9d9;
+    border-radius: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: border-color 0.3s;
+  
+    &:hover {
+      border-color: #1890ff;
+    }
+  }
+}
+//页面右侧
+.right{
+  width: 50vw;
+  flex:2;
+  height: 80vh;
+  //著录与分子
+  .container {
+    height: 70vh;
+    overflow: auto;
+    .bibtable{
+      width: 100%;
+      height:95%;
+      overflow: auto;
+    }
+    .molecularTable {
+      width: 100%;
+      height:80%;
+      overflow: auto;
+      .ant-table {   
+        .ant-table-thead > tr > th {
+          background-color: #fafafa;
+          font-weight: bold;
+          font-size: 16px;
+          color: #333;
+        }
+        .ant-table-tbody > tr > td {
+          font-size: 14px;
+          color: #555;
+          transition: background-color 0.3s ease;
+    
+          &:hover {
+            background-color: #f5f5f5;
+          }
+        }
+      }
+
+
+
+    }
+    
+  }
+  // 图片样式
+  .pictureContainer {
+    padding: 20px;
+  
+    .imageItem {
+      margin-bottom: 20px;
+      text-align: center;
+  
+      .caption {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 10px;
+      }
+  
+      .image {
+        max-width: 100%;
+        height: auto;
+      }
+  
+      .footnote {
+        font-size: 14px;
+        color: #666;
+        margin-top: 5px;
+      }
+    }
+  }
+  //下载按钮
+  .downloadbutton{
+    button{
+      width: 100%;
+      height: 35px;
+    }
+   
+  }
+}
+.tableContainer2 {
+  width: 100%;
+  height: 50%;
+  overflow: auto;
+  .ant-table {   
+    .ant-table-thead > tr > th {
+      background-color: #fafafa;
+      font-weight: bold;
+      font-size: 16px;
+      color: #333;
+
+    }
+
+    .ant-table-tbody > tr > td {
+      font-size: 14px;
+      color: #555;
+      transition: background-color 0.3s ease;
+
+      &:hover {
+        background-color: #f5f5f5;
+      }
+    }
+  }
+}
+.tabContent {
+  padding: 8px;
+  background-color: #ffffff;
+  height: 560px;
+  overflow:auto;
+  border-radius: 8px;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  position: relative; /* 确保子元素定位不受影响 */
+  z-index: 1; /* 确保tab内容区域处于较低的层级 */
+}
+
+.paginationContainer {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.molecularControls {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+
+  button {
+    width: 15%;
+    font-size: 10px;
+  }
+}
+
+.coreStructure {
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #fafafa;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+
+  h3 {
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+
+  .structureImage {
+    border: 1px dashed #d9d9d9;
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    img {
+      max-width: 100px;
+      height: auto;
+    }
+  }
+}
+
+.chemicalStructure {
+  text-align: center;
+
+  img {
+    max-width: 50px;
+    height: auto;
+  }
+}
+.picturecontainer {
+  background-color: #f5f5f5; /* 浅灰色背景 */
+  padding: 20px;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr); /* 设置为2列布局 */
+  grid-gap: 20px; /* 设置盒子之间的间距 */
+  height: 100%; /* 保证容器高度自适应 */
+  z-index: 2; /* 确保图片容器在tabContent上方 */
+  position: relative; /* 使z-index生效 */
+}
+
+.box {
+  background-color: white; /* 白色背景 */
+  border-radius: 10px; /* 圆角 */
+  padding: 15px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+}
+
+.header {
+  font-size: 18px;
+  color: #555555; /* 深灰色标题 */
+  font-weight: bold;
+}
+
+.caption {
+  font-size: 14px;
+  color: #888888; /* 浅灰色的说明文字 */
+  margin-top: 10px;
+}
+
+.footnote {
+  font-size: 12px;
+  color: #aaaaaa; /* 更浅的灰色 */
+  margin-top: 8px;
+}
+
+img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px; /* 图片的圆角 */
+  margin-top: 10px;
+}
+
+
+@media (max-width: 768px) {
+  .picturecontainer {
+    grid-template-columns: 1fr 1fr; /* 在屏幕宽度小于 768px 时，显示两列 */
+  }
+}
+
+@media (max-width: 480px) {
+  .picturecontainer {
+    grid-template-columns: 1fr; /* 在屏幕宽度小于 480px 时，显示一列 */
+  }
+}
+
+

@@ -11,6 +11,8 @@ import Layout2 from '../pages/Task/Layout2';  //任务中心布局界面2
 import Task from '../pages/Task';      //创建任务，收藏任务
 import Layout3 from '../pages/MarkDown/Layout3';  //Markdown布局界面
 import Markdown from '../pages/MarkDown';    //Markdown界面
+import Layout4 from '../pages/Result/Layout4';  //文献提取结果布局界面
+import Result from '../pages/Result';  //文献提取结果界面
 const RenderRouter = () => {
   const element = useRoutes([
     {
@@ -70,6 +72,16 @@ const RenderRouter = () => {
       {
         index: true,
         element: <Markdown />,
+      },
+    ],
+  },
+  {
+    path: "/result",
+    element: <Layout4 />,
+    children: [
+      {
+        index: true,
+        element: <Result />,
       },
     ],
   },

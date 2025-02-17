@@ -83,7 +83,7 @@ function Welcome() {
   };
 
   return (
-    <div className={welcomestyles.container} >
+    <div className={welcomestyles.welcomecontainer} >
       <Outlet/>
       <div className={welcomestyles.home} >
       <h1>PatMDAP助力高效准确深度解析数据科学文献</h1>
