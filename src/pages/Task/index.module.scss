@@ -1,0 +1,69 @@
+.container {
+  width: 100%;
+  margin: 0 auto;
+  height: 70vh; /* 使用 vh 代替 px */
+}
+
+.draggerCustom {
+  height: 70vh; /* 使用 vh 代替 px 保持上传框高度 */
+  width: 100%; 
+  border: 2px dashed #d9d9d9;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: border-color 0.3s;
+
+  &:hover {
+    border-color: #1890ff;
+  }
+}
+
+.uploadSection {
+  height: 70vh; /* 确保右侧和左侧高度一致 */
+  margin: 1vw; /* 使用 vw 代替 px */
+  background-color: #fafafa;
+  font-size: 2vw; /* 使用 vw 代替 px 设置字体大小 */
+}
+
+.uploadBox {
+  .ant-upload-dragger {
+    height: 18vh; /* 使用 vh 代替 px 设置高度 */
+    width: 100%;
+    border: 1px dashed #d9d9d9;
+    border-radius: 4px;
+    margin-right: 2vw; /* 使用 vw 代替 px 设置右边距 */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    p.ant-upload-text {
+      margin: 0;
+      color: #666;
+      font-size: 2vw; /* 使用 vw 代替 px 设置字体大小 */
+    }
+    p.ant-upload-hint {
+      margin: 0;
+      color: red;
+    }
+  }
+  
+  &:hover {
+    border-color: #1890ff;
+  }
+}
+.draggerCustom{
+  p{
+    width: 100%;
+  }
+}
+.resultsSection{
+  margin: 1vw;
+  height: 75vh;
+  overflow: auto;
+}
+.collectSection{
+  margin: 1vw;
+  height: 75vh;
+  overflow: auto;
+}
