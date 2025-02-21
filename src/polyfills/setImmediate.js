@@ -1,0 +1,1 @@
+export const setImmediate = (callback) => setTimeout(callback, 0);

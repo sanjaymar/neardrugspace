@@ -21,8 +21,8 @@
     "http-proxy-middleware": "^3.0.3",
     "immer": "^10.0.3",
     "katex": "^0.16.11",
-    "ketcher-core": "^2.15.1",
-    "ketcher-react": "^2.26.0",
+    "ketcher-core": "^2.28.0",
+    "ketcher-react": "^2.28.0",
     "ketcher-standalone": "^2.15.1",
     "macrocycle_drug_space": "file:",
     "markdown-it": "^14.1.0",
@@ -56,6 +56,7 @@
     "remark-gfm": "^4.0.0",
     "reset-css": "^5.0.2",
     "rollup": "^4.24.0",
+    "uui": "^1.0.7",
     "vite-plugin-eslint": "^1.8.1",
     "yarn": "^1.22.22",
     "zustand": "^4.4.7"

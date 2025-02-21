@@ -98,7 +98,9 @@ function Result() {
     console.error('下载数据失败:', error);
   }
 };
-
+const handleNavigateToEdit = () => {
+  navigate('/edit');
+}
   //著录部分
   // 请求查询著录数据
   const fetchData = async (taskid, token) => {
@@ -813,7 +815,7 @@ const data5 = [
                     src="src/assets/img/image1.png"
                     preview={false}
                     className={resultstyles.clickableImage}
-                    onClick={() => {/* 跳转逻辑 */}}
+                    onClick={() => {handleNavigateToEdit()}}
                   />
                   <div className={resultstyles.structureActions}>
                     <Button type="link" className={resultstyles.editButton}>编辑</Button>

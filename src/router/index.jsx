@@ -14,6 +14,7 @@ import Markdown from '../pages/MarkDown';    //Markdown界面
 import Layout4 from '../pages/Result/Layout4';  //文献提取结果布局界面
 import Result from '../pages/Result';  //文献提取结果界面
 import Search from '../pages/Search';  //编辑界面
+import Edit from '../pages/Edit';  //编辑界面
 const RenderRouter = () => {
   const element = useRoutes([
     {
@@ -85,6 +86,10 @@ const RenderRouter = () => {
         element: <Result />,
       },
     ],
+  },
+  {
+    path:"/edit",
+    element: <Edit/>,
   },
   {
     path:"/search",
