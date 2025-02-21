@@ -6,7 +6,10 @@ export default defineConfig({
   plugins: [react()],
   resolve: {
     alias: {
-      "@": path.resolve(__dirname, './src')
+      "@": path.resolve(__dirname, './src'),
+      'ketcher-core': 'ketcher-core/dist/index.js',
+      'ketcher-react': 'ketcher-react/dist/index.js'
+    
     }
   },
   server: {

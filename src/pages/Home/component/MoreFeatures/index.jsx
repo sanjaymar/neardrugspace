@@ -11,7 +11,7 @@ const MoreFeatures = ({ className }) => {
           <div className={styles.leaf4}></div>
         </div>
       </div>
-      <p>更多功能将陆续发布，敬请期待。。。</p>··
+      <p>更多功能将陆续发布，敬请期待...</p>
     </div>
   );
 };
