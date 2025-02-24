@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import resultstyles from './index.module.scss';
+import { useNavigate } from 'react-router-dom'; 
 import { Upload, Button, Form, message, Tabs } from 'antd';
 import { Table, Checkbox,  Pagination ,Radio} from 'antd';
 import { UploadOutlined, SaveOutlined, DownloadOutlined,FilterOutlined } from '@ant-design/icons';
@@ -10,6 +11,7 @@ import { Image } from 'antd';
 const { Dragger } = Upload;
 const { TabPane } = Tabs;
 function Result() {
+  const navigate = useNavigate();
   const [file, setFile] = useState(null);
   const [taskid, settaskid] = useState(null);
   const [loading, setLoading] = useState(false);
@@ -24,14 +26,17 @@ function Result() {
   const[molecular,setMolecular] =  useState({});
   const [table,setTable] = useState({});
   const [isImagesVisible, setIsImagesVisible] = useState(true);
+  const [smiles,setSmiles] = useState({});
   // 判断登录情况
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       // const storedTaskId = localStorage.getItem('taskid');
       const storedTaskId = "167";
+      const smiles = "O=C=O"
       if (storedTaskId) {
         settaskid((storedTaskId));
+        setSmiles(smiles);
         fetchData(storedTaskId, token);
         fetchData2(storedTaskId, token);
         fetchData3(storedTaskId, token);
@@ -98,9 +103,15 @@ function Result() {
     console.error('下载数据失败:', error);
   }
 };
-const handleNavigateToEdit = () => {
-  navigate('/edit');
-}
+
+const handleEdit = (smiles) => {
+  navigate('/edit', { 
+    state: { 
+      initialSmiles: smiles,
+      // 可以传递其他需要的数据
+    }
+  });
+};
   //著录部分
   // 请求查询著录数据
   const fetchData = async (taskid, token) => {
@@ -138,7 +149,7 @@ const handleNavigateToEdit = () => {
     }
   };
   // 著录数据
-  const data = record ? {
+const data = record ? {
     Patent_No: record.patentNumber || 'null',
     Date_of_Patent: record.dateOfPatent || 'null',
     Kind_code: record.kindCode || 'null',
@@ -674,7 +685,7 @@ const fetchData5 = async (taskid, token) => {
 //   };
 //   }) : [];
 const data5 = [
-  { id: 1,  structure0: 'C-001', structure1: '苯环衍生物', structure2: 'A-01', structure3: '萘环基' },
+  { id: 1,  structure0: 'H2O', structure1: '苯环衍生物', structure2: 'A-01', structure3: '萘环基' },
   { id: 2,  structure0: 'H-045', structure1: '吡啶环', structure2: 'B-12', structure3: '杂环化合物' },
   { id: 3,  structure0: 'O-102', structure1: '环戊烷骨架', structure2: 'C-23', structure3: '五元环系' },
   { id: 4,  structure0: 'N-308', structure1: '喹啉结构', structure2: 'D-34', structure3: '氮杂环' },
@@ -815,10 +826,10 @@ const data5 = [
                     src="src/assets/img/image1.png"
                     preview={false}
                     className={resultstyles.clickableImage}
-                    onClick={() => {handleNavigateToEdit()}}
+                    onClick={() => handleEdit(smiles)}
                   />
                   <div className={resultstyles.structureActions}>
-                    <Button type="link" className={resultstyles.editButton}>编辑</Button>
+                    <Button type="link" className={resultstyles.editButton} onClick={() => handleEdit(smiles)}>编辑</Button>
                     <Button type="link" danger>删除</Button>
                   </div>
                 </div>

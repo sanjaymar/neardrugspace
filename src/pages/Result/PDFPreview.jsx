@@ -23,7 +23,7 @@ function PDFPreview({ url }) {
       <Document
         file={{ url }}
         onLoadSuccess={onDocumentLoadSuccess}
-        onLoadError={onLoadError} // 添加错误处理
+        // onLoadError={onLoadError} // 添加错误处理
       >
         {Array.from(new Array(numPages), (el, index) => (
           <Page

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import mainstyles from './index.module.scss';
 import { useNavigate } from 'react-router-dom';
-import { Upload, Button, Form, message, Table } from 'antd';
-import { UploadOutlined } from '@ant-design/icons';
+import { Upload, Button, Form, message, Table,Input } from 'antd';
+import { UploadOutlined,SearchOutlined } from '@ant-design/icons';
 import TopNav from './TopNav';
 import PDFPreview from './PDFPreview.jsx';
 import { AiOutlineEdit, AiFillStar, AiOutlineStar } from 'react-icons/ai';
@@ -21,6 +21,7 @@ function Task() {
   const [collectData, setcollectData] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
   const [selectedTab, setSelectedTab] = useState('createtask');
+  const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {
     const storedToken = localStorage.getItem('token');
@@ -273,7 +274,17 @@ function Task() {
       resizable: true
     },
   ];
-
+// 添加过滤逻辑
+const filteredData1 = taskData.filter(item =>
+  Object.keys(item).some(key =>
+    String(item[key]).toLowerCase().includes(searchKeyword.toLowerCase())
+  )
+);
+const filteredData2 = collectData.filter(item =>
+  Object.keys(item).some(key =>
+    String(item[key]).toLowerCase().includes(searchKeyword.toLowerCase())
+  )
+);
   const renderContent = () => {
     if (selectedTab === 'createtask') {
       return (
@@ -310,10 +321,18 @@ function Task() {
     } else if (selectedTab === 'results') {
       return (
         <div className={mainstyles.resultsSection}>
+          <Input
+            placeholder="输入文件名搜索记录"
+            prefix={<SearchOutlined />}
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+            className={mainstyles.selectinput}
+            allowClear
+          />
           <Table
             rowSelection={{ selectedRowKeys, onChange: setSelectedRowKeys }}
             columns={columns}
-            dataSource={taskData}
+            dataSource={filteredData1}
             pagination={false}
             rowKey="id"
             bordered
@@ -324,10 +343,18 @@ function Task() {
     } else if (selectedTab === 'favorites') {
       return (
         <div className={mainstyles.collectSection}>
+                    <Input
+            placeholder="输入文件名搜索记录"
+            prefix={<SearchOutlined />}
+            value={searchKeyword}
+            onChange={(e) => setSearchKeyword(e.target.value)}
+            className={mainstyles.selectinput}
+            allowClear
+          />
           <Table
             rowSelection={{ selectedRowKeys, onChange: setSelectedRowKeys }}
             columns={columns}
-            dataSource={collectData}
+            dataSource={filteredData2}
             pagination={false}
             rowKey="id"
             bordered
