@@ -29,7 +29,7 @@ function Login() {
         localStorage.setItem('userInfo', JSON.stringify(data.data));
         
         message.success("登录成功"); // 使用 message 显示成功提示
-        navigate('/main');
+        navigate('/task');
       } else {
         message.error("登录失败"); // 使用 message 显示失败提示
       }

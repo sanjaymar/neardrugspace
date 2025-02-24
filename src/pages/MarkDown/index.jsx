@@ -108,28 +108,41 @@ function MarkDown() {
 
   return (
     <div className={markdownstyles.allcontainer}>
-          <Dragger
+      <Dragger
         fileList={file ? [{ uid: '-1', name: file, status: 'done' }] : []}
         className={markdownstyles.draggerCustom}
         showUploadList={false}
         disabled
       >
+      <div className={markdownstyles.previewContainer}>
           <PDFPreview url={`http://172.20.137.175:90/files/${file}`} />
+        </div>
       </Dragger>
 
       <div className={markdownstyles.right}>
-        <MdEditor
-          ref={editorRef}
-          value={markdown}
-          className={markdownstyles.editor}
-          config={{
-            view: {
-              menu: true,
-              md: true,
-              html: true
-            },
-            shortcuts: true
-          }}
+          <MdEditor
+              ref={editorRef}
+              value={markdown}
+              className={markdownstyles.editor}
+              config={{
+                view: {
+                  menu: false,
+                  md: true,
+                  html: true,
+                },
+                shortcuts: true,
+                htmlClass: 'markdown-body', // 添加自定义 class
+                markdownClass: 'markdown-body', // 添加自定义 class
+                  // 新增表格渲染配置
+                table: {
+                  maxRow: 20,
+                  maxCol: 6
+                }
+              }}
+              style={{
+                height: '100%',
+                width: '100%'
+              }}
           renderHTML={text => mdParser.render(text)}
           onChange={({ text }) => setMarkdown(text)}
           onScroll={handleScroll}

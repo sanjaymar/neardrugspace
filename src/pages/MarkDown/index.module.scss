@@ -1,49 +1,148 @@
 .allcontainer {
-  width: 100%;
-  height: 90vh;
+  width: 95%;
+  height: 90vh; // 减去顶部导航栏高度
   display: flex;
-  justify-content: space-around;
-  align-items: flex-start;
+  gap: 20px;
   padding: 20px;
   background-color: #f8f9fa;
-  
+  box-sizing: border-box;
+  overflow: hidden; // 主容器禁用滚动
+
   .draggerCustom {
     flex: 1;
-    height: 85vh; // 保持上传框的高度
-    width: 20%; // 让拖拽区域占满左侧容器的全部宽度
+    min-width: 35%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
     border: 2px dashed #d9d9d9;
     border-radius: 4px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-right: 20px;
-    cursor: pointer;
-    transition: border-color 0.3s;
+    overflow: auto; 
+    .previewContainer {
+      flex: 1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: auto;
 
-    &:hover {
-      border-color: #1890ff;
+  
+      // PDF预览内容包装器
+      .pdf-preview-wrapper {
+        max-width: 100%;
+        max-height: 100%;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+    }
+  }
+
+  .right {
+    flex: 2;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    min-width: 65%;
+    .editor {
+      flex: 1;
+      min-height: 0;
+      border: 1px solid #d9d9d9;
+      border-radius: 4px;
+      overflow: hidden;
+      margin-bottom: 10px;   
+      // 编辑器内部滚动容器
+      .rc-md-editor {       
+        height: 100%;
+      }
+    }
+    // 新增 markdown 内容样式
+    :global {
+      .rc-md-editor {
+        // 整体字体调整
+        font-size: 14px;
+        border-radius: 4px;
+
+        // 编辑器左右分区
+        .editor-container {
+          flex-direction: row !important;
+
+          // 共同样式
+          .sec-md, .sec-html {
+            width: 50% !important;
+            padding: 12px;
+            font-size: 14px;
+            line-height: 1.6;
+          }
+
+          // Markdown输入区
+          .sec-md {
+            pre {
+              code {
+                font-size: 13px;
+              }
+            }
+          }
+
+          // 预览区核心样式
+          .sec-html {
+            .markdown-body {
+              // 基础字体
+              font-size: 14px;
+              font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+              // 通用段落
+              p {
+                margin: 0.8em 0;
+                line-height: 1.7;
+                max-width: 100%;
+                overflow-wrap: anywhere;
+              }
+
+              // 表格解决方案
+              table {
+                display: table !important; // 强制显示为表格
+                width: 100% !important;
+                margin: 1em 0;
+                border-collapse: collapse;
+                white-space: normal;
+
+                td, th {
+                  padding: 8px 12px;
+                  border: 1px solid #e8e8e8;
+                  min-width: 80px;
+                  max-width: 400px;
+                  word-break: normal;
+                  vertical-align: top;
+                }
+
+                tr:nth-child(2n) {
+                  background-color: #f8f8f8;
+                }
+              }
+
+              // 代码块优化
+              pre {
+                code {
+                  font-size: 13px;
+                  white-space: pre-wrap;
+                  word-wrap: break-word;
+                  display: block;
+                  padding: 12px;
+                  background: #f6f8fa;
+                }
+              }
+
+              // 列表项对齐
+              li {
+                word-break: break-word;
+                margin: 0.4em 0;
+              }
+            }
+          }
+        }
+      }
     }
 
-  .ant-card-head {
-    background-color: #003366;
-    color: #fff;
-    border-radius: 8px 8px 0 0;
-    width: 40%;
+    button {
+      flex-shrink: 0;
+      margin: 0;
+      height: 40px;
+    }
   }
 }
-.right{
-  flex:2;
-  height: 80vh;
-  .editor{
-    height: 80vh;
-    flex:2;
-
-  }
-  button{
-    margin: 10px 0;
-    width: 100%;
-  }
-  
-}
-}
- 
