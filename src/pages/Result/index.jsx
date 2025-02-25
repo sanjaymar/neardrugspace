@@ -23,11 +23,13 @@ function Result() {
   const [synthesisList, setSynthesisList] = useState({ });
   const [imagesList, setImagesList] = useState({ });
   const [isDisabled, setIsDisabled] = useState(false);
-  const [selectedCategory, setSelectedCategory] = useState('reaction'); // 默认选中“反应机理图”
+  const [selectedCategory, setSelectedCategory] = useState('2'); // 默认选中“反应机理图”
   const[molecular,setMolecular] =  useState({});
   const [table,setTable] = useState({});
   const [isImagesVisible, setIsImagesVisible] = useState(true);
   const [smiles,setSmiles] = useState({});
+  const [pageSize, setPageSize] = useState(10);
+  const [expandedRowKeys, setExpandedRowKeys] = useState([]);
   // 判断登录情况
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -50,7 +52,19 @@ function Result() {
       message.error('用户未登录');
     }
   }, []);
-
+  // 选择条选择
+  useEffect(() => {
+    // 每次 activeTab 改变时检查 record 是否为空，并设置按钮状态
+      if (activeTab === 'bibliographic' && record === null) {
+        setIsDisabled(true);
+      } else if (activeTab === 'reaction' && synthesisList === null) {
+        setIsDisabled(true);
+      } else if (activeTab === 'picture' && (imagesList === null||imagesList.length === 0)) {
+        setIsDisabled(true);
+      } else {
+        setIsDisabled(false);
+      }
+    }, [activeTab, record, synthesisList,imagesList]);
  // 下载函数
  const handleDownload = async () => {
   if (isDisabled) return; // 如果按钮被禁用，直接返回
@@ -534,19 +548,7 @@ const data3 = Array.isArray(imagesList) ? imagesList.map((image, index) => {
     // 根据需求提取更多字段
   };
 }) : [];
-//图片部分判断选择条选择
-useEffect(() => {
-// 每次 activeTab 改变时检查 record 是否为空，并设置按钮状态
-  if (activeTab === 'bibliographic' && record === null) {
-    setIsDisabled(true);
-  } else if (activeTab === 'reaction' && synthesisList === null) {
-    setIsDisabled(true);
-  } else if (activeTab === 'picture' && (imagesList === null||imagesList.length === 0)) {
-    setIsDisabled(true);
-  } else {
-    setIsDisabled(false);
-  }
-}, [activeTab, record, synthesisList,imagesList]);
+
 
 
 
@@ -580,16 +582,40 @@ const fetchData4 = async (taskid, token) => {
   }
 };
 //分子数据
-const data4 = Array.isArray(molecular) ? molecular.map((molecularItem, index) => {
-  return {
-    index: index + 1, // 索引
-    structure: molecularItem.structure || '', // 化合物的structure
-    code: molecularItem.code || '', // 化合物的code
-    source: molecularItem.source || '', // 化合物的source
-    property: molecularItem.property || '', // 化合物的property
-    // 根据需求提取更多字段
-  };
-}) : [];
+// const data4 = Array.isArray(molecular) ? molecular.map((molecularItem, index) => {
+//   return {
+//     index: index + 1, // 索引
+//     structure: molecularItem.structure || '', // 化合物的structure
+//     code: molecularItem.code || '', // 化合物的code
+//     source: molecularItem.source || '', // 化合物的source
+//     property: molecularItem.property || '', // 化合物的property
+//     // 根据需求提取更多字段
+//   };
+// }) : [];
+
+
+const data4 = [
+  { id: 1, structure: 'CCO', code: 'M001', source: 'Natural', property: 'Solvent' },
+  { id: 2, structure: 'CCN', code: 'M002', source: 'Synthetic', property: 'Base' },
+  { id: 3, structure: 'C=O', code: 'M003', source: 'Natural', property: 'Carbonyl' },
+  { id: 4, structure: 'C#N', code: 'M004', source: 'Synthetic', property: 'Nitrile' },
+  { id: 5, structure: 'C1=CC=CC=C1', code: 'M005', source: 'Natural', property: 'Aromatic' },
+  { id: 6, structure: 'C(C(=O)O)N', code: 'M006', source: 'Synthetic', property: 'Amino Acid' },
+  { id: 7, structure: 'C1CCCCC1', code: 'M007', source: 'Natural', property: 'Cyclohexane' },
+  { id: 8, structure: 'C1=CC=C2C=CC=CC2=C1', code: 'M008', source: 'Synthetic', property: 'Polycyclic' },
+  { id: 9, structure: 'C1=CN=CN1', code: 'M009', source: 'Natural', property: 'Heterocycle' },
+  { id: 10, structure: 'C1=CC=C(C=C1)O', code: 'M010', source: 'Synthetic', property: 'Phenol' },
+  { id: 11, structure: 'C1=CC=C(C=C1)Cl', code: 'M011', source: 'Natural', property: 'Chlorobenzene' },
+  { id: 12, structure: 'C1=CC=C(C=C1)Br', code: 'M012', source: 'Synthetic', property: 'Bromobenzene' },
+  { id: 13, structure: 'C1=CC=C(C=C1)I', code: 'M013', source: 'Natural', property: 'Iodobenzene' },
+  { id: 14, structure: 'C1=CC=C(C=C1)F', code: 'M014', source: 'Synthetic', property: 'Fluorobenzene' },
+  { id: 15, structure: 'C1=CC=C(C=C1)NO2', code: 'M015', source: 'Natural', property: 'Nitrobenzene' },
+  { id: 16, structure: 'C1=CC=C(C=C1)NH2', code: 'M016', source: 'Synthetic', property: 'Aniline' },
+  { id: 17, structure: 'C1=CC=C(C=C1)COOH', code: 'M017', source: 'Natural', property: 'Benzoic Acid' },
+  { id: 18, structure: 'C1=CC=C(C=C1)CO', code: 'M018', source: 'Synthetic', property: 'Benzaldehyde' },
+  { id: 19, structure: 'C1=CC=C(C=C1)CH3', code: 'M019', source: 'Natural', property: 'Toluene' },
+  { id: 20, structure: 'C1=CC=C(C=C1)OCH3', code: 'M020', source: 'Synthetic', property: 'Anisole' },
+];
 const handleSelectChange = (selectedRowKeys) => {
   setSelectedRowKeys(selectedRowKeys);
 };
@@ -597,7 +623,6 @@ const rowSelection = {
   selectedRowKeys,
   onChange: handleSelectChange,
 };
-
   const columns2 = [
   {
     title: 'ID',
@@ -647,6 +672,13 @@ const rowSelection = {
     key: 'property',
   },
 ];
+ // 分页变化时的回调
+ const handlePageChange = (page, size) => {
+  setCurrentPage(page);
+  setPageSize(size);
+};
+
+
 // 返回对应的母核结构表格
 const expandedRowRender = (record) => {
   return (
@@ -731,7 +763,7 @@ const data5 = [
         {record===null?( // synthesisList 为空时显示无数据提示
         <div style={{ textAlign: 'center', padding: '20px',fontWeight:'bold',fontSize:'20px',color:'#333'}}>
                 -----著录无数据-----
-        </div>):(<div  className={resultstyles.container}><Table
+        </div>):(<div  className={resultstyles.bibicontainer}><Table
         className={resultstyles.bibtable}
         columns={columns}
         dataSource={patentDetails}
@@ -743,40 +775,45 @@ const data5 = [
       </div>
       );
       case 'molecular':
-        return <div className={resultstyles.container}>
+        return <div className={resultstyles.molecularcontainer}>
         {/* 顶部控制区 */}
         <div className={resultstyles.molecularControls}>
-          <Checkbox style={{ marginRight: '300px',width:'100%'}}>全选</Checkbox>
-          <Button type="primary" danger icon={<DeleteOutlined />} style={{ marginLeft: '10px' }}>
+          <Checkbox className={resultstyles.checkbox}>全选</Checkbox>
+          <div className={resultstyles.headerbutton}>
+          <Button type="primary" danger icon={<DeleteOutlined />} style={{ marginRight: '10px' }}>
             删除无编号分子
           </Button>
-          <Button type="primary" icon={<PlusOutlined />} style={{ marginLeft: '10px' }}>
+          <Button type="primary" icon={<PlusOutlined />} style={{ marginRight: '10px' }}>
             批量删除
           </Button>
-          <Button type="primary" style={{ marginLeft: '10px' }}>
+          <Button type="primary" >
             *添加分子
           </Button>
+          </div>
         </div>
         <div className={resultstyles.molecularTable}>
         <Table
         rowSelection={rowSelection}
         columns={columns2}
-        dataSource={data4}
-        pagination={false}
+        dataSource={data4.slice((currentPage - 1) * pageSize, currentPage * pageSize)} // 分页数据
+        pagination={false} // 禁用 Table 自带的分页
         rowKey="id"
         bordered
         expandable={{ expandedRowRender, rowExpandable: () => true }}
         onExpandedRowsChange={keys => setExpandedRowKeys(keys)}
       />
       </div>
-      {/* 分页控制 */}
-      <Pagination
+      {/* 单独放置的分页 */}
+      <div className={resultstyles.paginationContainer}>
+        <Pagination
           current={currentPage}
-          onChange={(page) => setCurrentPage(page)}
-          total={data4.length * 20} // 假设总数据条数为每页20条的倍数
-          pageSize={5}
-          style={{ textAlign: 'center', marginTop: '10px' }}
+          pageSize={pageSize}
+          total={data4.length}
+          onChange={handlePageChange}
+          showSizeChanger
+          onShowSizeChange={handlePageChange}
         />
+      </div>
       </div>
       
       ;
@@ -900,110 +937,118 @@ const data5 = [
           </div>
           </div>
         );      
-        // 反应
+      // 反应
       case 'reaction':
-        return (
-          <div style={{ height: '630px',
-            overflow: 'auto', 
-            borderRadius: '8px',
-            boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.1)', }}>
-            {synthesisList === null ? (
-              // synthesisList 为空时显示无数据提示
-              <div style={{ textAlign: 'center', padding: '20px',fontWeight:'bold',fontSize:'20px',color:'#333'}}>
-                -----合成反应无数据-----
-              </div>
-            ) : (
-              // 有数据时渲染表格
-              data2.map((item, index) => {
-                // 化合物信息表格数据
-                const reactionDetails = [
-                  { key: '1', field: '化合物编号', details: item.chemicalCompoundTable[0].exampleId || 'null' },
-                  { key: '2', field: '化合物ID', details: item.chemicalCompoundTable[0].compoundId || 'null' },
-                  { key: '3', field: '化合物名称（1）', details: item.chemicalCompoundTable[0].intermediateName || 'null' },
-                  { key: '4', field: '化合物名称（2）', details: item.chemicalCompoundTable[0].compoundName || 'null' },
-                  { key: '5', field: '化合物结构', details: item.chemicalCompoundTable[0].smiles || 'null' },
-                  { key: '6', field: '相关反应', details: item.chemicalCompoundTable[0].referenceReactions || 'null' },
-                  { key: '7', field: '表征信息', details: item.chemicalCompoundTable[0].represent || 'null' },
-                  { key: '8', field: '反应步骤结构化描述', details: item.chemicalCompoundTable[0].stucture || 'null' },
-                ];
-      
-                // 合成过程表格数据
-                const reactionDetails2 = item.synthesisProcessTable.map((step, stepIndex) => [
-                  { key: `${stepIndex + 1}-1`, field: '反应步骤编号', details: step.stepId || 'null' },
-                  { key: `${stepIndex + 1}-2`, field: '反应步骤化合物', details: step.stepCompound || 'null' },
-                  { key: `${stepIndex + 1}-3`, field: '反应步骤', details: step.stepDesc || 'null' },
-                  { key: `${stepIndex + 1}-4`, field: '相关反应', details: step.proReferenceReactions || 'null' },
-                  { key: `${stepIndex + 1}-5`, field: '表征信息', details: step.represent2 || 'null' },
-                  { key: `${stepIndex + 1}-6`, field: '反应步骤结构化描述', details: step.structure2 || 'null' },
-                ]).flat();
-      
-                return (
-                  <div key={`compound-process-${index}`} style={{ marginBottom: '20px' }}>
-                    {/* 化合物表格 */}
-                    <Table
-                      columns={columnsChemicalCompound}
-                      dataSource={reactionDetails}
-                      pagination={false}
-                      bordered
-                      loading={loading}
-                    />
-      
-                    {/* 合成过程表格 */}
-                    <Table
-                      columns={columnsSynthesisProcess}
-                      dataSource={reactionDetails2}
-                      pagination={false}
-                      bordered
-                      loading={loading}
-                    />
-                  </div>
-                  
-                );
-              })
-            )}
-          </div>
-        );
+          return (
+            <div className={resultstyles.reactionContainer}>
+              {synthesisList === null ? (
+                // synthesisList 为空时显示无数据提示
+                <div className={resultstyles.noData}>
+                  无数据
+                </div>
+              ) : (
+                // 有数据时渲染表格
+                data2.map((item, index) => {
+                  // 化合物信息表格数据
+                  const reactionDetails = [
+                    { key: '1', field: '化合物编号', details: item.chemicalCompoundTable.exampleId || 'null' },
+                    { key: '2', field: '化合物ID', details: item.chemicalCompoundTable.compoundId || 'null' },
+                    { key: '3', field: '化合物名称（1）', details: item.chemicalCompoundTable.intermediateName || 'null' },
+                    { key: '4', field: '化合物名称（2）', details: item.chemicalCompoundTable.compoundName || 'null' },
+                    { key: '5', field: '化合物结构', details: item.chemicalCompoundTable.smiles || 'null' },
+                    { key: '6', field: '相关反应', details: item.chemicalCompoundTable.referenceReactions || 'null' },
+                    { key: '7', field: '表征信息', details: item.chemicalCompoundTable.represent || 'null' },
+                    { key: '8', field: '反应步骤结构化描述', details: item.chemicalCompoundTable.stucture || 'null' },
+                  ];
+        
+                  // 合成过程表格数据
+                  const reactionDetails2 = item.synthesisProcessTable.map((step, stepIndex) => [
+                    { key: `${stepIndex + 1}-1`, field: '反应步骤编号', details: step.stepId || 'null' },
+                    { key: `${stepIndex + 1}-2`, field: '反应步骤化合物', details: step.stepCompound || 'null' },
+                    { key: `${stepIndex + 1}-3`, field: '反应步骤', details: step.stepDesc || 'null' },
+                    { key: `${stepIndex + 1}-4`, field: '相关反应', details: step.proReferenceReactions || 'null' },
+                    { key: `${stepIndex + 1}-5`, field: '表征信息', details: step.represent2 || 'null' },
+                    { key: `${stepIndex + 1}-6`, field: '反应步骤结构化描述', details: step.structure2 || 'null' },
+                  ]).flat();
+        
+                  return (
+                    <div key={`compound-process-${index}`} className={resultstyles.tableWrapper}>
+                      {/* 化合物表格 */}
+                      <Table
+                        columns={columnsChemicalCompound}
+                        dataSource={reactionDetails}
+                        pagination={false}
+                        bordered
+                        loading={loading}
+                      />
+        
+                      {/* 合成过程表格 */}
+                      <Table
+                        columns={columnsSynthesisProcess}
+                        dataSource={reactionDetails2}
+                        pagination={false}
+                        bordered
+                        loading={loading}
+                      />
+                    </div>
+                  );
+                })
+              )}
+            </div>
+          );    
       case 'picture':
           // 初始化图片分类对象
-          // 分类图片数据
           const categorizedImages = {
-            reaction: [], // 反应机理图
-            experiment: [], // 实验结果图
-            characterization: [], // 化学表征图
+            
+            2: { title: '反应机理图', images: [] },
+            3: { title: '实验结果图', images: [] },
+            4: { title: '化学表征图', images: [] },
           };
-
+        
+          // 将图片分类到对应的类型中
           if (Array.isArray(data3) && data3.length > 0) {
             data3.forEach((image) => {
               if (categorizedImages[image.label]) {
-                categorizedImages[image.label].push(image);
+                categorizedImages[image.label].images.push(image);
               }
             });
           }
         
           return (
             <div className={resultstyles.pictureContainer}>
-            {/* 选择条 */}
-            <Radio.Group
-              options={[
-                { label: '反应机理图', value: 'reaction' },
-                { label: '实验结果图', value: 'experiment' },
-                { label: '化学表征图', value: 'characterization' },
-              ]}
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-              style={{ marginBottom: '20px' }}
-            />
-  
-            {/* 根据选择的类别渲染图片 */}
-            {categorizedImages[selectedCategory].map((image, index) => (
-              <div key={index} style={resultstyles.imageItem}>
-                <div style={resultstyles.caption}>{image.caption || '无标题'}</div>
-                <img src={`data:image/png;base64,${image.img || ''}`} alt={image.caption} style={resultstyles.image} />
-                <div style={resultstyles.footnote}>{image.footnote || '无脚注'}</div>
+              {/* 选择条 */}
+              <Radio.Group
+                options={[
+                  { label: '反应机理图', value: '2' },
+                  { label: '实验结果图', value: '3' },
+                  { label: '化学表征图', value: '4' },
+                ]}
+                value={selectedCategory}
+                onChange={(e) => setSelectedCategory(e.target.value)}
+                style={{ marginBottom: '20px' }}
+              />
+        
+              {/* 根据选择的类别渲染图片 */}
+              <div className={resultstyles.imageList}>
+                {categorizedImages[selectedCategory].images.length > 0 ? (
+                  categorizedImages[selectedCategory].images.map((image, index) => (
+                    <div key={index} className={resultstyles.imageItem}>
+                      <div className={resultstyles.caption}>{image.caption || '无标题'}</div>
+                      <img
+                        src={`data:image/png;base64,${image.img || ''}`}
+                        alt={image.caption}
+                        className={resultstyles.image}
+                      />
+                      <div className={resultstyles.footnote}>{image.footnote || '无脚注'}</div>
+                    </div>
+                  ))
+                ) : (
+                  <div className={resultstyles.noData}>
+                    无数据
+                  </div>
+                )}
               </div>
-            ))}
-
-          </div>
+            </div>
           );
         
         
