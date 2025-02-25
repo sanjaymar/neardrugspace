@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>Smiles Drawer Example</title>
+    <meta name="description" content="A minimal smiles drawer example." />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Droid+Sans:400,700"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <canvas id="example-canvas" width="120" height="100" style="border: 0px solid #ddd;"></canvas>
+
+    <script src="https://unpkg.com/smiles-drawer@1.0.10/dist/smiles-drawer.min.js"></script>
+    <script>
+      // 获取 Canvas 元素
+      let canvas = document.getElementById("example-canvas");
+
+      // 初始化配置
+      let options = {
+        width: 150, // 固定宽度
+        height: 80, // 固定高度
+        bondThickness: 2,
+        atomColoring: true,
+      };
+
+      // 初始化 SmilesDrawer
+      let smilesDrawer;
+      try {
+        smilesDrawer = new SmilesDrawer.Drawer(options);
+      } catch (error) {
+        console.error("SmilesDrawer 初始化失败:", error);
+      }
+
+      // 获取 URL 中的 SMILES 参数
+      const urlParams = new URLSearchParams(window.location.search);
+      const smiles = urlParams.get("smiles");
+
+      // 如果 URL 中有 SMILES 参数，直接生成分子结构图片
+      if (smiles) {
+        // 解析 SMILES 字符串
+        SmilesDrawer.parse(
+          smiles,
+          function (tree) {
+            // 检查解析结果
+            if (!tree) {
+              console.error("SMILES 解析失败：未生成有效的分子结构树");
+              return;
+            }
+
+            // 绘制分子结构
+            try {
+              smilesDrawer.draw(tree, "example-canvas", "light", false);
+
+              // 将 Canvas 转换为 Base64 图片
+              let image = canvas.toDataURL("image/png");
+
+              // 将图片发送到父页面
+              window.parent.postMessage({ smiles, image }, "*");
+            } catch (error) {
+              console.error("绘制分子结构失败:", error);
+            }
+          },
+          function (error) {
+            console.error("SMILES 解析错误:", error);
+          }
+        );
+      } else {
+        console.error("未提供 SMILES 字符串");
+      }
+    </script>
+  </body>
+</html>

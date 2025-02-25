@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useRef } from 'react';
-import resultstyles from './index.module.scss';
 import { useNavigate } from 'react-router-dom'; 
 import { Upload, Button, Form, message, Tabs } from 'antd';
 import { Table, Checkbox,  Pagination ,Radio} from 'antd';
@@ -7,7 +6,9 @@ import { UploadOutlined, SaveOutlined, DownloadOutlined,FilterOutlined } from '@
 import PDFPreview from './PDFPreview.jsx';
 import { StarOutlined,CopyOutlined,DeleteOutlined,PlusOutlined,SortAscendingOutlined } from '@ant-design/icons';
 import { FaMapMarkerAlt } from 'react-icons/fa';
-import { Image } from 'antd';
+// 在需要使用表格的组件中
+import resultstyles from './index.module.scss';
+
 const { Dragger } = Upload;
 const { TabPane } = Tabs;
 function Result() {
@@ -103,7 +104,20 @@ function Result() {
     console.error('下载数据失败:', error);
   }
 };
+const [images, setImages] = useState({}); // 存储 SMILES 和对应的图片
 
+// 监听 message 事件，接收 index2.html 发送的图片
+useEffect(() => {
+  const handleMessage = (event) => {
+    const { smiles, image } = event.data;
+    if (smiles && image) {
+      setImages((prev) => ({ ...prev, [smiles]: image }));
+    }
+  };
+
+  window.addEventListener("message", handleMessage);
+  return () => window.removeEventListener("message", handleMessage);
+}, []);
 const handleEdit = (smiles) => {
   navigate('/edit', { 
     state: { 
@@ -685,26 +699,30 @@ const fetchData5 = async (taskid, token) => {
 //   };
 //   }) : [];
 const data5 = [
-  { id: 1,  structure0: 'H2O', structure1: '苯环衍生物', structure2: 'A-01', structure3: '萘环基' },
-  { id: 2,  structure0: 'H-045', structure1: '吡啶环', structure2: 'B-12', structure3: '杂环化合物' },
-  { id: 3,  structure0: 'O-102', structure1: '环戊烷骨架', structure2: 'C-23', structure3: '五元环系' },
-  { id: 4,  structure0: 'N-308', structure1: '喹啉结构', structure2: 'D-34', structure3: '氮杂环' },
-  { id: 5,  structure0: 'S-207', structure1: '噻吩环', structure2: 'E-45', structure3: '硫杂环' },
-  { id: 6,  structure0: 'F-119', structure1: '氟代苯环', structure2: 'F-56', structure3: '卤代结构' },
-  { id: 7,  structure0: 'Cl-202', structure1: '氯代萘环', structure2: 'G-67', structure3: '稠环体系' },
-  { id: 8,  structure0: 'B-335', structure1: '硼酸酯结构', structure2: 'H-78', structure3: '配位结构' },
-  { id: 9,  structure0: 'Si-401', structure1: '硅氧烷链', structure2: 'I-89', structure3: '无机骨架' },
-  { id: 10, structure0: 'P-512', structure1: '磷酸酯基', structure2: 'J-90', structure3: '磷杂环' },
-  { id: 11, structure0: 'M-615', structure1: '金属络合物', structure2: 'K-01', structure3: '配位结构' },
-  { id: 12, structure0: 'D-703', structure1: '双环[3.2.1]', structure2: 'L-12', structure3: '桥环体系' },
-  { id: 13, structure0: 'T-808', structure1: '三键结构', structure2: 'M-23', structure3: '炔烃基团' },
-  { id: 14, structure0: 'E-912', structure1: '环氧结构', structure2: 'N-34', structure3: '氧杂环' },
-  { id: 15, structure0: 'G-024', structure1: '胍基团', structure2: 'O-45', structure3: '氮富集结构' },
-  { id: 16, structure0: 'K-117', structure1: '酮羰基', structure2: 'P-56', structure3: '羰基衍生物' },
-  { id: 17, structure0: 'A-229', structure1: '氨基酸骨架', structure2: 'Q-67', structure3: '生物分子' },
-  { id: 18, structure0: 'V-336', structure1: '乙烯基团', structure2: 'R-78', structure3: '烯烃结构' },
-  { id: 19, structure0: 'Z-444', structure1: '甾体骨架', structure2: 'S-89', structure3: '四环体系' },
-  { id: 20, structure0: 'X-555', structure1: '酰胺键', structure2: 'T-90', structure3: '肽链结构' }
+  { id: 1,  structure0: 'O', structure1: '苯环衍生物', structure2: 'A-01', structure3: '萘环基' },
+  { id: 2,  structure0: 'C1=CC=NC=C1', structure1: '吡啶环', structure2: 'B-12', structure3: '杂环化合物' },
+  { id: 3,  structure0: 'C1CCCC1', structure1: '环戊烷骨架', structure2: 'C-23', structure3: '五元环系' },
+  { id: 4,  structure0: 'C1=CC=C2C(=C1)C=NC=N2', structure1: '喹啉结构', structure2: 'D-34', structure3: '氮杂环' },
+  { id: 5,  structure0: 'C1=CSC=C1', structure1: '噻吩环', structure2: 'E-45', structure3: '硫杂环' },
+  { id: 6,  structure0: 'FC1=CC=CC=C1', structure1: '氟代苯环', structure2: 'F-56', structure3: '卤代结构' },
+  { id: 7,  structure0: 'ClC1=CC=C2C=CC=CC2=C1', structure1: '氯代萘环', structure2: 'G-67', structure3: '稠环体系' },
+  { id: 8,  structure0: 'B(O)(O)C1=CC=CC=C1', structure1: '硼酸酯结构', structure2: 'H-78', structure3: '配位结构' },
+  { id: 9,  structure0: 'O[Si](C)(C)O', structure1: '硅氧烷链', structure2: 'I-89', structure3: '无机骨架' },
+  { id: 10, structure0: 'OP(=O)(O)O', structure1: '磷酸酯基', structure2: 'J-90', structure3: '磷杂环' },
+  { id: 11, structure0: '[Cu](N)(N)O', structure1: '金属络合物', structure2: 'K-01', structure3: '配位结构' },
+  { id: 12, structure0: 'C1CC2CC3CC(C2C1)C3', structure1: '双环[3.2.1]', structure2: 'L-12', structure3: '桥环体系' },
+  { id: 13, structure0: 'C#C', structure1: '三键结构', structure2: 'M-23', structure3: '炔烃基团' },
+  { id: 14, structure0: 'C1COC1', structure1: '环氧结构', structure2: 'N-34', structure3: '氧杂环' },
+  { id: 15, structure0: 'NC(=N)N', structure1: '胍基团', structure2: 'O-45', structure3: '氮富集结构' },
+  { id: 16, structure0: 'CC(=O)C', structure1: '酮羰基', structure2: 'P-56', structure3: '羰基衍生物' },
+  { id: 17, structure0: 'NCC(=O)O', structure1: '氨基酸骨架', structure2: 'Q-67', structure3: '生物分子' },
+  { id: 18, structure0: 'C=C', structure1: '乙烯基团', structure2: 'R-78', structure3: '烯烃结构' },
+  { id: 19, structure0: 'C1CC2C3CCC4CCCCC4C3CC2C1', structure1: '甾体骨架', structure2: 'S-89', structure3: '四环体系' },
+  { id: 20, structure0: 'NC(=O)C', structure1: '酰胺键', structure2: 'T-90', structure3: '肽链结构' },
+  { id: 21, structure0: 'NCC(=O)O', structure1: '氨基酸骨架', structure2: 'Q-67', structure3: '生物分子' },
+  { id: 22, structure0: 'C=C', structure1: '乙烯基团', structure2: 'R-78', structure3: '烯烃结构' },
+  { id: 23, structure0: 'C1CC2C3CCC4CCCCC4C3CC2C1', structure1: '甾体骨架', structure2: 'S-89', structure3: '四环体系' },
+  { id: 24, structure0: 'NC(=O)C', structure1: '酰胺键', structure2: 'T-90', structure3: '肽链结构' }
 ];
   const renderTabContent = () => {
     switch (activeTab) {
@@ -799,8 +817,7 @@ const data5 = [
               </div>
 
             </div>
-      
-      
+           
             <div className={resultstyles.resultContainer}>
             {/* 表格顶部工具栏 */}
             <div className={resultstyles.tableHeader}>
@@ -821,35 +838,59 @@ const data5 = [
             <div className={resultstyles.structureSection}>
               <div className={resultstyles.molecularStructure}>
                 <div className={resultstyles.structurePreview}>
-                  <Image
+                <iframe
+                    title={`smiles-${record.id}`}
+                    src={`/index2.html?smiles=${encodeURIComponent(smiles)}`}
                     width={120}
-                    src="src/assets/img/image1.png"
-                    preview={false}
-                    className={resultstyles.clickableImage}
-                    onClick={() => handleEdit(smiles)}
+                    height={100}
+                    style={{ border: "none", overflow: "hidden" }}
+                    scrolling="no"
                   />
-                  <div className={resultstyles.structureActions}>
-                    <Button type="link" className={resultstyles.editButton} onClick={() => handleEdit(smiles)}>编辑</Button>
-                    <Button type="link" danger>删除</Button>
-                  </div>
                 </div>
                 <div className={resultstyles.structureInfo}>
                   <h3 className={resultstyles.structureTitle}>母核结构</h3>
-                  <p className={resultstyles.structureDescription}>这里是母核结构的描述文字。</p>
+                  <div className={resultstyles.structureActions}>
+                    <Button type="link" className={resultstyles.editButton} onClick={() => handleEdit(smiles)}>
+                      编辑
+                    </Button>
+                    <Button type="link" danger>
+                      删除
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
 
             {/* 数据表格 */}
             <div className={resultstyles.dataTable}>
-              <Table
-                 columns={[
-                  { title: 'ID', dataIndex: 'id', key: 'id' },
-                  { title: '0', dataIndex: 'structure0', key: 'structure0' },
-                  { title: 'Structure', dataIndex: 'structure1', key: 'structure1' },
-                  { title: '1', dataIndex: 'structure2', key: 'structure2' },
-                  { title: 'Structure', dataIndex: 'structure3', key: 'structure3' },
+            <Table
+                columns={[
+                  { title: "ID", dataIndex: "id", key: "id",width: "50px"},
+                  {
+                    title: "分子结构",
+                    key: "structure0",
+                    render: (_, record) => {
+                      const smiles = record.structure0;
+                      return images[smiles] ? (
+                        <img src={images[smiles]} alt={smiles} width={160} height={80} style={{ objectFit: "contain" }} />
+                      ) : (
+                        <iframe
+                          title={`smiles-${record.id}`}
+                          src={`/index2.html?smiles=${encodeURIComponent(smiles)}`}
+                          width={150}
+                          height={80}
+                          style={{ border: "none", overflow: "hidden" }}
+                          scrolling="no"
+                        />
+                      );
+                    },
+                    width: "180px"
+                  },
+                  { title: "Structure", dataIndex: "structure1", key: "structure1" },
+                  { title: "1", dataIndex: "structure2", key: "structure2" },
+                  { title: "Structure", dataIndex: "structure3", key: "structure3" },
                 ]}
+                rowKey="id"
                 dataSource={data5}
                 pagination={false}
                 scroll={{ y: 300 }}
@@ -916,6 +957,7 @@ const data5 = [
                       loading={loading}
                     />
                   </div>
+                  
                 );
               })
             )}
@@ -960,6 +1002,7 @@ const data5 = [
                 <div style={resultstyles.footnote}>{image.footnote || '无脚注'}</div>
               </div>
             ))}
+
           </div>
           );
         

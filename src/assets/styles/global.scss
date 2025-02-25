@@ -239,9 +239,13 @@ h1 {
 .ant-collapse{
   font-family: 'Garamond', sans-serif;
 }
-.ant-table-cell{
-  padding: 5px 15px;
+/* 覆盖 Ant Design 的全局样式 */
+ .ant-table-cell {
+  padding: 8px !important;
+  vertical-align: middle !important;
+  text-align: center !important;
 }
+
 
 
 

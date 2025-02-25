@@ -65,7 +65,6 @@
       }
 
 
-
     }
     
   }
@@ -105,15 +104,69 @@
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
     padding: 0px 20px 20px 20px;
     margin-bottom: 10px;
-    overflow: hidden; /* 防止全局溢出 */
+    overflow: hidden; /* 防止全局溢出 */ 
+    /* 可折叠图片区域 */
+    .imageSection {
+      flex: 0 0 auto;
+    margin: 0px 5px 0px 5px;
+
+    .tableImages {
+      display: flex;
+      overflow-x: auto;
+      height: 0;
+      opacity: 0;
+      transition: all 0.3s ease;
+
+      &.visible {
+        height: 15vh;
+        opacity: 1;
+        margin: 8px 0 5px;
+      }
+
+      img {
+        flex: none;
+        width: auto;
+        height: auto;
+        max-width: 12vw;
+        max-height: 12vh;
+        margin: 0 1.5vw;
+        object-fit: contain;
+        object-position: center;
+      }
+    }
+      .collapseControl {
+        position: relative;
+        margin: 2px 2px;
   
-    /* 顶部工具栏 */
-    .tableHeader {
+        .dividerLine {
+          border-bottom: 1px solid #e0e0e0;
+          margin: 18px 0px;
+        }
+  
+        .collapseButton {
+          position: absolute;
+          left: 50%;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          background: #fff;
+          padding: 4px 24px;
+          border-radius: 16px;
+          transition: all 0.3s;
+        }
+      }
+    } 
+    .resultContainer {
+      flex: 1;
+      display: flex;
+      height: 50vh;
+      flex-direction: column;
+          /* 顶部工具栏 */
+      .tableHeader {
       flex: 0 0 auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 16px;
+      margin-bottom: 5px;
       padding-bottom: 5px;
       border-bottom: 1px solid #f0f0f0;
       height: 3vh; /* 固定高度 */
@@ -142,108 +195,67 @@
           }
         }
       }
-    }
-  
-    /* 母核结构区域 */
-    .structureSection {
-      flex: 0 0 auto;
-      margin: 16px 0;
-      border: 1px solid #f0f0f0;
-      border-radius: 4px;
-      padding: 10px;
-      height: 10vh; /* 固定高度 */
-  
-      .molecularStructure {
-        display: flex;
-        align-items: center;
-        gap: 24px;
-        height: 90%;
-  
-        .clickableImage {
-          flex: 0 0 100px;
-          height: 75px;
-          width: 80%;
-          border-radius: 4px;
-          cursor: pointer;
-          transition: transform 0.3s;
-          &:hover {
-            transform: scale(1.02);
-          }
-        }
-  
-        .structureInfo {
-          flex: 1;
-          height: 100%;
-          border-left: 2px solid #1890ff;
-          padding-left: 16px;
+      }
+      .structureSection {
+        flex: 0 0 auto;
+        margin: 5px 0;
+        height: 10vh; /* 固定高度 */
+        .molecularStructure {
           display: flex;
-          flex-direction: column;
-          justify-content: space-between;
-  
-          .structureTitle {
-            margin: 0;
-            font-size: 16px;
+          align-items: center;
+          gap: 24px;
+          height: 100%;
+          border-bottom: 1px solid #e0e0e0;
+          border-top: 1px solid #e0e0e0;
+          .structurePreview {
+            flex: 0 0 180px; /* 固定宽度 */
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            // border: 1px solid #a6a2a2;
+            border-right: 2px solid #e0e0e0 ;
+            iframe {
+              width: 100%;
+              height: 100%;
+              overflow: hidden;
+              
+            }
           }
-  
-          .structureActions {
-            align-self: flex-end;
+      
+          .structureInfo {
+            flex: 1;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+           
+            .structureTitle {
+              margin: 15px 15px;
+              font-size: 16px;
+              font-weight: bold;
+            }
+      
+            .structureActions {
+              display: flex;
+              gap: 8px;
+              .editButton {
+                
+                color: #1890ff;
+              }
+            }
           }
         }
+      }
+      .dataTable {
+        flex: 1;
+        overflow: auto;
+        overflow-y: auto;
+        
+  
       }
     }
-  
-    /* 可折叠图片区域 */
-    .imageSection {
-      flex: 0 0 auto;
-      margin: 0px 5px 0px 5px;
-  
-      .collapseControl {
-        position: relative;
-        margin: 2px 2px;
-  
-        .dividerLine {
-          border-bottom: 1px solid #e0e0e0;
-          margin: 18px 0px;
-        }
-  
-        .collapseButton {
-          position: absolute;
-          left: 50%;
-          top: 50%;
-          transform: translate(-50%, -50%);
-          background: #fff;
-          padding: 4px 24px;
-          border-radius: 16px;
-          transition: all 0.3s;
-        }
-      }
-  
-      .tableImages {
-        display: flex;
-        overflow-x: auto;
-        height: 0;
-        opacity: 0;
-        transition: all 0.3s ease;
 
-  
-        &.visible {
-          height: 18vh;  /* 展开高度 */
-          opacity: 1;
-          margin: 8px 0 5px;
-        }
-  
-        img {
-          flex: none; /* 移除固定伸缩比例 */
-          width: auto; 
-          height: auto;
-          max-width: 12vw;
-          max-height: 14vh;
-          margin: 0 1.5vw;
-          object-fit: contain; /* 修改为等比例缩放 */
-          object-position: center;
-        }
-      }
-    } 
   }
   //下载按钮
   .downloadbutton{
