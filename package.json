@@ -13,12 +13,14 @@
     "@iktakahiro/markdown-it-katex": "^4.0.1",
     "@rdkit/rdkit": "^2024.3.5-1.0.0",
     "@react-pdf-viewer/core": "^3.12.0",
-    "antd": "^5.21.3",
+    "antd": "^5.24.2",
     "axios": "^1.6.2",
+    "cheerio": "^1.0.0",
     "easymde": "^2.18.0",
     "echarts": "^5.4.3",
     "echarts-for-react": "^3.0.2",
     "framer-motion": "^10.16.16",
+    "html-react-parser": "^5.2.2",
     "http-proxy-middleware": "^3.0.3",
     "immer": "^10.0.3",
     "katex": "^0.16.11",
@@ -47,6 +49,7 @@
     "qs": "^6.11.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-html-parser": "^2.0.2",
     "react-i18next": "^15.0.2",
     "react-icons": "^5.3.0",
     "react-markdown": "^9.0.1",
@@ -56,6 +59,7 @@
     "react-router": "^6.21.0",
     "react-router-dom": "^6.21.0",
     "react-simplemde-editor": "^5.2.0",
+    "react-table": "^7.8.0",
     "remark-gfm": "^4.0.0",
     "reset-css": "^5.0.2",
     "rollup": "^4.24.0",
@@ -80,6 +84,7 @@
     "prettier": "^3.1.1",
     "sass": "^1.69.5",
     "sass-loader": "^13.3.2",
-    "vite": "^5.0.8"
+    "vite": "^5.0.8",
+    "vite-plugin-commonjs": "^0.10.4"
   }
 }

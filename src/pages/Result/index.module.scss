@@ -264,7 +264,15 @@
         flex: 1;
         overflow: auto;
         overflow-y: auto;
-        
+        overflow-x: auto;
+        .itemhtml{
+          font-weight: bolder;
+          margin-top: 20px;
+          text-align: center;
+          border: #e0e0e0 1px solid;
+          padding: 5px;
+          /* 在样式文件中 */
+        }
   
       }
     }
@@ -315,3 +323,9 @@
 }
 
 
+.editbutton{
+  margin-bottom: 8px;
+  Button{
+    margin-left: 5px;
+  }
+}

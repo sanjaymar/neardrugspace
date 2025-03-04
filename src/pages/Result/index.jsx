@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { Upload, Button, Form, message, Tabs } from 'antd';
 import { Table, Checkbox,  Pagination ,Radio} from 'antd';
-import { UploadOutlined, SaveOutlined, DownloadOutlined,FilterOutlined } from '@ant-design/icons';
+import { UploadOutlined, SaveOutlined, DownloadOutlined,FilterOutlined,EditOutlined } from '@ant-design/icons';
 import PDFPreview from './PDFPreview.jsx';
 import { StarOutlined,CopyOutlined,DeleteOutlined,PlusOutlined,SortAscendingOutlined } from '@ant-design/icons';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 // 在需要使用表格的组件中
 import resultstyles from './index.module.scss';
+import EditableTable from './EditableTable.jsx';
+import ReactHtmlParser from 'react-html-parser'
 
 const { Dragger } = Upload;
 const { TabPane } = Tabs;
@@ -30,12 +32,14 @@ function Result() {
   const [smiles,setSmiles] = useState({});
   const [pageSize, setPageSize] = useState(10);
   const [expandedRowKeys, setExpandedRowKeys] = useState([]);
+  const [imgList,setImgList] = useState([]);
+  const [htmlList,setHtmlList] = useState([]);
   // 判断登录情况
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // const storedTaskId = localStorage.getItem('taskid');
-      const storedTaskId = "167";
+      //  const storedTaskId = localStorage.getItem('taskid');
+      const storedTaskId = "196";
       const smiles = "O=C=O"
       if (storedTaskId) {
         settaskid((storedTaskId));
@@ -700,7 +704,7 @@ const expandedRowRender = (record) => {
 const fetchData5 = async (taskid, token) => {
   setLoading(true);
   try {
-    const response = await fetch(`/api/apiResult/table/${taskid}`, {
+    const response = await fetch(`/api/form/${taskid}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -711,58 +715,71 @@ const fetchData5 = async (taskid, token) => {
       throw new Error('Network response was not ok');
     }
     const data = await response.json();
-    if (data.code === '200' && data.data) {
-      const table = data.data.table; // 解析 molecular 字段
-      setTable(table); // 更新状态
+      if (data.code === '200' && data.data) {
+        const imgList =data.data.imgList
+        const htmlList =data.data.htmlList
+        setImgList(imgList) // 更新状态
+        setHtmlList(htmlList) // 更新状态
+        if (imgList === null && activeTab === 'table'&& htmlList === null) {
+          setIsDisabled(true);
+        } else {
+          setIsDisabled(false);
+        }
+      } else {
+        message.error(data.msg || "发生错误");
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      message.error("获取数据时发生错误：" + error.message);
+    } finally {
       setLoading(false);
     }
-  } catch (error) {
-    console.error('获取数据失败:', error);
-  } finally {
-    setLoading(false);
-  }
+  };
+// 生成图片展示区域
+const renderImages = () => (
+  <div className={`${resultstyles.tableImages} ${isImagesVisible ? resultstyles.visible : ''}`}>
+    {imgList
+      ?.sort((a, b) => a.id - b.id) // 按ID排序
+      .map((img) => (
+        <img
+          key={img.id}
+          src={`data:image/png;base64,${img.img}`}
+          alt={`实验图片-${img.id}`}
+        />
+      ))}
+  </div>
+);
+//新增图表
+const handleAddTable = () => {
+  const newTable = {
+    id: `${htmlList.length + 1}`, // 生成唯一 ID
+    html: `
+      <table>
+        <thead>
+          <tr>
+            <th>null</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>null</td>
+          </tr>
+        </tbody>
+      </table>
+    `, // 初始化表头和第一行
+  };
+  setHtmlList([...htmlList, newTable]);
 };
-//表格数据
-// const data5 = Array.isArray(table) ? table.map((tableItem, index) => {
-//   return {
-//     index: index + 1, // 索引
-//     field: tableItem.field || '', // 表格字段
-//     details: tableItem.details || '', // 表格内容
-//   };
-//   }) : [];
-const data5 = [
-  { id: 1,  structure0: 'O', structure1: '苯环衍生物', structure2: 'A-01', structure3: '萘环基' },
-  { id: 2,  structure0: 'C1=CC=NC=C1', structure1: '吡啶环', structure2: 'B-12', structure3: '杂环化合物' },
-  { id: 3,  structure0: 'C1CCCC1', structure1: '环戊烷骨架', structure2: 'C-23', structure3: '五元环系' },
-  { id: 4,  structure0: 'C1=CC=C2C(=C1)C=NC=N2', structure1: '喹啉结构', structure2: 'D-34', structure3: '氮杂环' },
-  { id: 5,  structure0: 'C1=CSC=C1', structure1: '噻吩环', structure2: 'E-45', structure3: '硫杂环' },
-  { id: 6,  structure0: 'FC1=CC=CC=C1', structure1: '氟代苯环', structure2: 'F-56', structure3: '卤代结构' },
-  { id: 7,  structure0: 'ClC1=CC=C2C=CC=CC2=C1', structure1: '氯代萘环', structure2: 'G-67', structure3: '稠环体系' },
-  { id: 8,  structure0: 'B(O)(O)C1=CC=CC=C1', structure1: '硼酸酯结构', structure2: 'H-78', structure3: '配位结构' },
-  { id: 9,  structure0: 'O[Si](C)(C)O', structure1: '硅氧烷链', structure2: 'I-89', structure3: '无机骨架' },
-  { id: 10, structure0: 'OP(=O)(O)O', structure1: '磷酸酯基', structure2: 'J-90', structure3: '磷杂环' },
-  { id: 11, structure0: '[Cu](N)(N)O', structure1: '金属络合物', structure2: 'K-01', structure3: '配位结构' },
-  { id: 12, structure0: 'C1CC2CC3CC(C2C1)C3', structure1: '双环[3.2.1]', structure2: 'L-12', structure3: '桥环体系' },
-  { id: 13, structure0: 'C#C', structure1: '三键结构', structure2: 'M-23', structure3: '炔烃基团' },
-  { id: 14, structure0: 'C1COC1', structure1: '环氧结构', structure2: 'N-34', structure3: '氧杂环' },
-  { id: 15, structure0: 'NC(=N)N', structure1: '胍基团', structure2: 'O-45', structure3: '氮富集结构' },
-  { id: 16, structure0: 'CC(=O)C', structure1: '酮羰基', structure2: 'P-56', structure3: '羰基衍生物' },
-  { id: 17, structure0: 'NCC(=O)O', structure1: '氨基酸骨架', structure2: 'Q-67', structure3: '生物分子' },
-  { id: 18, structure0: 'C=C', structure1: '乙烯基团', structure2: 'R-78', structure3: '烯烃结构' },
-  { id: 19, structure0: 'C1CC2C3CCC4CCCCC4C3CC2C1', structure1: '甾体骨架', structure2: 'S-89', structure3: '四环体系' },
-  { id: 20, structure0: 'NC(=O)C', structure1: '酰胺键', structure2: 'T-90', structure3: '肽链结构' },
-  { id: 21, structure0: 'NCC(=O)O', structure1: '氨基酸骨架', structure2: 'Q-67', structure3: '生物分子' },
-  { id: 22, structure0: 'C=C', structure1: '乙烯基团', structure2: 'R-78', structure3: '烯烃结构' },
-  { id: 23, structure0: 'C1CC2C3CCC4CCCCC4C3CC2C1', structure1: '甾体骨架', structure2: 'S-89', structure3: '四环体系' },
-  { id: 24, structure0: 'NC(=O)C', structure1: '酰胺键', structure2: 'T-90', structure3: '肽链结构' }
-];
+
+
+
   const renderTabContent = () => {
     switch (activeTab) {
       case 'bibliographic':
         return ( <div >
         {record===null?( // synthesisList 为空时显示无数据提示
-        <div style={{ textAlign: 'center', padding: '20px',fontWeight:'bold',fontSize:'20px',color:'#333'}}>
-                -----著录无数据-----
+        <div className={resultstyles.noData}>
+        无数据
         </div>):(<div  className={resultstyles.bibicontainer}><Table
         className={resultstyles.bibtable}
         columns={columns}
@@ -818,30 +835,11 @@ const data5 = [
       
       ;
       case 'table':
-        const images = [
-          // 假设这里有一些图片 URL
-          'src/assets/img/image1.png',
-          'src/assets/img/image2.png',
-          'src/assets/img/image3.png',
-          'src/assets/img/image1.png',
-          'src/assets/img/image2.png',
-          'src/assets/img/image3.png',
-        ];
-      
         return (
           <div className={resultstyles.tableContainer}>
             {/* 图片栏 & 折叠控制 */}
             <div className={resultstyles.imageSection}>
-               {/* 可折叠的图片区域 */}
-               <div className={`${resultstyles.tableImages} ${isImagesVisible ? resultstyles.visible : ''}`}>
-                {images.map((image, index) => (
-                  <img
-                    key={index}
-                    src={image}
-                    alt={`Image ${index + 1}`}
-                  />
-                ))}
-              </div>
+              {renderImages()}
               {/* 始终显示的分割线控制栏 */}
               <div className={resultstyles.collapseControl}>
                 <div className={resultstyles.dividerLine} />
@@ -865,9 +863,13 @@ const data5 = [
                 </div>
               </div>
               <div className={resultstyles.tableHeaderRight}>
-                <Button className={resultstyles.primaryTextButton}>新增图表</Button>
-                <Button className={resultstyles.primaryTextButton}>新增母核结构</Button>
-                <Button className={resultstyles.primaryTextButton}>2D Structure</Button>
+              <Button className={resultstyles.primaryTextButton} onClick={handleAddTable}>
+              新增图表
+            </Button>
+            <Button className={resultstyles.primaryTextButton}>新增母核结构</Button>
+            <Button className={resultstyles.primaryTextButton} >
+              2D Structure
+            </Button>
               </div>
             </div>
 
@@ -876,7 +878,7 @@ const data5 = [
               <div className={resultstyles.molecularStructure}>
                 <div className={resultstyles.structurePreview}>
                 <iframe
-                    title={`smiles-${record.id}`}
+                    // title={`smiles-${record.id}`}
                     src={`/index2.html?smiles=${encodeURIComponent(smiles)}`}
                     width={120}
                     height={100}
@@ -897,43 +899,17 @@ const data5 = [
                 </div>
               </div>
             </div>
-
-            {/* 数据表格 */}
             <div className={resultstyles.dataTable}>
-            <Table
-                columns={[
-                  { title: "ID", dataIndex: "id", key: "id",width: "50px"},
-                  {
-                    title: "分子结构",
-                    key: "structure0",
-                    render: (_, record) => {
-                      const smiles = record.structure0;
-                      return images[smiles] ? (
-                        <img src={images[smiles]} alt={smiles} width={160} height={80} style={{ objectFit: "contain" }} />
-                      ) : (
-                        <iframe
-                          title={`smiles-${record.id}`}
-                          src={`/index2.html?smiles=${encodeURIComponent(smiles)}`}
-                          width={150}
-                          height={80}
-                          style={{ border: "none", overflow: "hidden" }}
-                          scrolling="no"
-                        />
-                      );
-                    },
-                    width: "180px"
-                  },
-                  { title: "Structure", dataIndex: "structure1", key: "structure1" },
-                  { title: "1", dataIndex: "structure2", key: "structure2" },
-                  { title: "Structure", dataIndex: "structure3", key: "structure3" },
-                ]}
-                rowKey="id"
-                dataSource={data5}
-                pagination={false}
-                scroll={{ y: 300 }}
-                className={resultstyles.customTable}
-              />
-            </div>
+            {htmlList.map(item => {
+              return (
+                <div key={item.id} className={resultstyles.itemhtml}>
+        
+                  <h3>Table ID: {item.id}</h3>
+                  <EditableTable htmlString={item.html}tableId={item.id} />
+                </div>
+              );
+            })}
+          </div>
           </div>
           </div>
         );      

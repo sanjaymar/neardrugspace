@@ -83,7 +83,7 @@ function Task() {
         // Refetch task data
         handleSearch(token);  // Fetch the updated task data
         setSelectedTab('results'); // Update selected tab after fetching
-        navigate('/results'); // Navigate to results
+        navigate('/task/results'); // Navigate to results
       } else {
         message.error(data.msg || "发生错误");
       }
