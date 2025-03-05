@@ -17,7 +17,7 @@ import 'katex/dist/katex.min.css';  // 引入 KaTeX 样式文件
 import markdownItMultimdTable from 'markdown-it-multimd-table';
 import PDFPreview from './PDFPreview.jsx';
 import { m } from 'framer-motion';
-
+import { useParams } from 'react-router-dom';
 const { Dragger } = Upload;
 
 const mdParser = new MarkdownIt({
@@ -42,25 +42,25 @@ function MarkDown() {
   const [token, setUserToken] = useState('');
   const [taskid, setTaskId] = useState('');
   const [syncScroll, setSyncScroll] = useState(true);
-
+  const { id } = useParams(); // 获取路由参数 id
+  const [storedTaskId, setStoredTaskId] = React.useState('');
   const editorRef = useRef(null);
   const previewRef = useRef(null);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
+    if (token && id) {
       setUserToken(token);
-      const storedTaskId = localStorage.getItem('taskid');
-      if (storedTaskId) {
-        setTaskId(storedTaskId);
-        fetchMarkdownData(storedTaskId, token);
-      } else {
-        message.error('用户未提交文件');
-      }
-    } else {
-      message.error('用户未登录');
-    }
-  }, []);
+      setStoredTaskId(id); // 将 id 赋值给 storedTaskId
+
+        fetchMarkdownData(id, token);
+
+    } else if (!token) {
+          message.error('用户未登录');
+        } else if (!id) {
+          message.error('任务 ID 未提供');
+        }
+      }, [id]); // 监听 id 的变化
 
   const fetchMarkdownData = async (taskid, token) => {
     setLoading(true);

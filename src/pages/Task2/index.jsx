@@ -22,7 +22,7 @@ function Task() {
   const [taskData, settaskData] = useState([]);
   const [collectData, setcollectData] = useState([]);
   const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-  const [selectedTab, setSelectedTab] = useState('createtask');
+  const [selectedTab, setSelectedTab] = useState('results');
   const [searchKeyword, setSearchKeyword] = useState('');
 
   useEffect(() => {

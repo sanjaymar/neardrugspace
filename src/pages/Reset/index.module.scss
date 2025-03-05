@@ -4,34 +4,30 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background-color:#eaf0ff
+  background-color: #f0f8ff;
 }
 
 .logo {
   display: flex;
   align-items: center;
   width: 100%;
-  // padding: 10px 20px;
-  background-color:#eaf0ff;
+  padding: 10px 20px;
+  background-color: #f0f8ff;
   height: 50px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   font-family: 'MyLogoFont', sans-serif;
-  color: #006bc9;
+  color: #003366;
   font-size: 2.5rem;
   font-weight: bold;
-  span{
-    margin-left: 50px;
-  }
 }
 
 .card {
-  width: 35%;
-  padding: 10px;
-  padding-left: 50px;
+  width: 30%;
+  padding: 20px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   margin: auto;
-  margin-top: 100px;
+  align-items: center;
   border-radius: 20px; /* 设置圆角 */
   overflow: hidden; /* 隐藏溢出的内容 */
   transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out; /* 添加过渡效果 */
@@ -42,10 +38,18 @@
   }
   h1 {
     font-size: 1.2rem;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
     font-weight: bolder;
-    width: 95%;
+    width: 100%;
     text-align: center;
+  }
+}
+
+.infoGroup {
+  margin-bottom: 15px;
+  p {
+    margin: 5px 0;
+    font-size: 0.9rem;
   }
 }
 
@@ -54,33 +58,35 @@
   display: flex;
   flex-direction: column;
   align-items: start;
-  width: 95%;
+  width: 100%;
 
   label {
     margin-bottom: 5px;
     font-size: 0.9rem;
-    text-align: center;
+    text-align: left;
   }
 
   input {
-    width: 95%; // 输入框宽度调整为95%，使其填满整个卡片宽度
+    width: 95%;
     padding: 8px;
     border: 1px solid #ccc;
     border-radius: 4px;
   }
 }
 
-.registerbutton {
+.resetbutton {
   padding: 10px 20px;
   border: none;
-  border-radius: 20px; // 增加圆角
+  align-items: center;
   font-size: 16px;
+  display: block;
+  border-radius: 20px;
   background-color: #1890ff;
   color: #ffffff;
-  width: 95%; // 按钮宽度调整为95%，使其填满整个卡片宽度
-  margin-top: 5px;
-  align-items: center;
-
+  width: 60%;
+  margin-top: 10px;
+  margin-left: 100px;
+  cursor: pointer;
   &:hover {
     background-color: #003366;
   }

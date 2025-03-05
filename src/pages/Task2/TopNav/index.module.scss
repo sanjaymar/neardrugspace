@@ -1,0 +1,40 @@
+.topNav {
+  display: block;
+  background-color: #f8f9fa;
+  margin-top: 3vh; // 用 vh 替代固定像素
+  margin-left: 1vw; // 用 vw 替代固定像素
+
+  .selectionBar {
+    height: 0.2vh; // 设置高度为视口高度的百分比
+    margin-top: 1vh; // 设置顶部间距为视口高度的百分比
+    background-color: #ccc;
+    width: 100%; // 宽度设置为 100%
+  }
+
+  .navItem {
+    margin-right: 0.3vw; // 设置右边距为视口宽度的百分比
+    cursor: pointer;
+    color: #666;
+    text-decoration: none;
+    font-size: 1.2vw; // 设置字体大小为视口宽度的百分比
+
+    &:hover {
+      color: #1890ff; // 鼠标悬浮时变为蓝色
+    }
+
+    &:last-child {
+      margin-right: 0; // 最后一项不设置右边距
+    }
+
+    &.activeTab {
+      color: white;
+      background-color: #A2D4FF; // 选中时显示蓝色背景
+    }
+  }
+}
+
+.menu {
+  display: flex;
+  justify-content: space-between; // 保证子项之间有间距
+  width: 20%; // 确保菜单宽度是100%
+}

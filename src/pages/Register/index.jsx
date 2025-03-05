@@ -137,7 +137,8 @@ function Register() {
               required
             />
           </div>
-          <button type="submit" className={registerstyles.registerbutton}>注册</button>
+          <button type="submit" className={registerstyles.registerbutton} onClick={handleRegister}>注册</button>
+          <button type="submit" className={registerstyles.registerbutton} onClick={() => navigate('/login')}>返回登录</button>
         </form>
       </div>
     </div>

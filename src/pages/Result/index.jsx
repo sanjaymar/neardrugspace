@@ -10,7 +10,7 @@ import { FaMapMarkerAlt } from 'react-icons/fa';
 import resultstyles from './index.module.scss';
 import EditableTable from './EditableTable.jsx';
 import ReactHtmlParser from 'react-html-parser'
-
+import { useParams } from 'react-router-dom';
 const { Dragger } = Upload;
 const { TabPane } = Tabs;
 function Result() {
@@ -34,28 +34,30 @@ function Result() {
   const [expandedRowKeys, setExpandedRowKeys] = useState([]);
   const [imgList,setImgList] = useState([]);
   const [htmlList,setHtmlList] = useState([]);
-  // 判断登录情况
+  const { id } = useParams(); // 获取路由参数 id
+  const [storedTaskId, setStoredTaskId] = React.useState('');
   useEffect(() => {
     const token = localStorage.getItem('token');
-    if (token) {
-      //  const storedTaskId = localStorage.getItem('taskid');
-      const storedTaskId = "196";
-      const smiles = "O=C=O"
-      if (storedTaskId) {
-        settaskid((storedTaskId));
-        setSmiles(smiles);
-        fetchData(storedTaskId, token);
-        fetchData2(storedTaskId, token);
-        fetchData3(storedTaskId, token);
-        fetchData4(storedTaskId, token);
-        fetchData5(storedTaskId, token);
-      } else {
-        message.error('用户未提交文件');
-      }
-    } else { 
+    if (token && id) {
+      setStoredTaskId(id); // 将 id 赋值给 storedTaskId
+      localStorage.setItem('storedTaskId', id); // 将 id 存储到 localStorage
+
+      const smiles = "O=C=O";
+      settaskid(id);
+      setSmiles(smiles);
+
+      // 调用 fetchData 函数
+      fetchData(id, token);
+      fetchData2(id, token);
+      fetchData3(id, token);
+      fetchData4(id, token);
+      fetchData5(id, token);
+    } else if (!token) {
       message.error('用户未登录');
+    } else if (!id) {
+      message.error('任务 ID 未提供');
     }
-  }, []);
+  }, [id]); // 监听 id 的变化
   // 选择条选择
   useEffect(() => {
     // 每次 activeTab 改变时检查 record 是否为空，并设置按钮状态
