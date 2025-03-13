@@ -15,19 +15,19 @@ function TopNav({ selectedTab, setSelectedTab }) {
       <div className={topnavstyles.menu}>
       <div
         className={`${topnavstyles.navItem} ${selectedTab === 'createtask' ? topnavstyles.activeTab : ''}`}
-        onClick={() => handleTabChange('createtask', '/result')}
+        onClick={() => handleTabChange('createtask', '/markdown')}
       >
         创建任务
       </div>
       <div
         className={`${topnavstyles.navItem} ${selectedTab === 'results' ? topnavstyles.activeTab : ''}`}
-        onClick={() => handleTabChange('results', '/result/results')}
+        onClick={() => handleTabChange('results', '/markdown/results')}
       >
         结果列表
       </div>
       <div
         className={`${topnavstyles.navItem} ${selectedTab === 'favorites' ? topnavstyles.activeTab : ''}`}
-        onClick={() => handleTabChange('favorites', '/result/favorites')}
+        onClick={() => handleTabChange('favorites', '/markdown/favorites')}
       >
         收藏列表
       </div>

@@ -10,6 +10,7 @@ import Home from '../pages/Home';             //任务中心介绍界面
 import Layout2 from '../pages/Task/Layout2';  //任务中心布局界面2
 import Task from '../pages/Task';      //创建任务，收藏任务
 import Task2 from '../pages/Task2';      //创建任务，收藏任务
+import Task3 from '../pages/Task3';      //创建任务，收藏任务
 import Layout3 from '../pages/MarkDown/Layout3';  //Markdown布局界面
 import Markdown from '../pages/MarkDown';    //Markdown界面
 import Layout4 from '../pages/Result/Layout4';  //文献提取结果布局界面
@@ -70,6 +71,7 @@ const RenderRouter = () => {
       }
     ],
   },
+ 
   {
     path: "/markdown",
     element: <Layout3 />,
@@ -80,8 +82,16 @@ const RenderRouter = () => {
       },
       {
         index: true,
-        element:  <Task2 />
+        element:  <Task3 />
       },
+      {
+        path:'/markdown/results',
+        element: <Task3 />,
+      },
+      {
+        path:'/markdown/favorites',
+        element: <Task3 />,
+      }
     ],
   },
   {
@@ -96,6 +106,14 @@ const RenderRouter = () => {
         index: true,
         element:  <Task2 />
       },
+      {
+        path:'/result/results',
+        element: <Task2 />,
+      },
+      {
+        path:'/result/favorites',
+        element: <Task2 />,
+      }
     ],
   },
   {

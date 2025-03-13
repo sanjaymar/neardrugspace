@@ -365,6 +365,8 @@ const columns = [
   
 ];  
 
+
+
 //合成反应部分
 // 请求查询合成反应数据
   const fetchData2 = async (taskid, token) => {
