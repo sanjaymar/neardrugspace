@@ -1,10 +1,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom'; 
 import { Upload, Button, Form, message, Tabs } from 'antd';
-import { Table, Checkbox,  Pagination ,Radio} from 'antd';
+import { Table, Checkbox,  Pagination ,Radio,Modal} from 'antd';
 import { UploadOutlined, SaveOutlined, DownloadOutlined,FilterOutlined,EditOutlined } from '@ant-design/icons';
 import PDFPreview from './PDFPreview.jsx';
 import { StarOutlined,CopyOutlined,DeleteOutlined,PlusOutlined,SortAscendingOutlined } from '@ant-design/icons';
+import {
+  SyncOutlined,
+  CalculatorOutlined,
+  AreaChartOutlined,
+  DatabaseOutlined,
+} from '@ant-design/icons';
 import { FaMapMarkerAlt } from 'react-icons/fa';
 // 在需要使用表格的组件中
 import resultstyles from './index.module.scss';
@@ -36,8 +42,26 @@ function Result() {
   const [htmlList,setHtmlList] = useState([]);
   const { id } = useParams(); // 获取路由参数 id
   const [storedTaskId, setStoredTaskId] = React.useState('');
+  const [isPdfReady, setIsPdfReady] = useState(false);
+  const [boxes,setBoxes] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedTables, setSelectedTables] = useState([]);
+  const [isMergeModalVisible, setIsMergeModalVisible] = useState(false);
+  const [mergeTableData, setMergeTableData] = useState(null);
+  const [images, setImages] = useState([]); // 添加这行
+
+useEffect(() => {
+  // 模拟 PDF 渲染完成
+  const timer = setTimeout(() => {
+    setIsPdfReady(true);
+  }, 5000); // 假设 PDF 渲染需要 3 秒
+
+  return () => clearTimeout(timer);
+}, []);
+
   useEffect(() => {
     const token = localStorage.getItem('token');
+    // const id = "200"
     if (token && id) {
       setStoredTaskId(id); // 将 id 赋值给 storedTaskId
       localStorage.setItem('storedTaskId', id); // 将 id 存储到 localStorage
@@ -45,7 +69,6 @@ function Result() {
       const smiles = "O=C=O";
       settaskid(id);
       setSmiles(smiles);
-
       // 调用 fetchData 函数
       fetchData(id, token);
       fetchData2(id, token);
@@ -124,8 +147,6 @@ function Result() {
     console.error('下载数据失败:', error);
   }
 };
-const [images, setImages] = useState({}); // 存储 SMILES 和对应的图片
-
 // 监听 message 事件，接收 index2.html 发送的图片
 useEffect(() => {
   const handleMessage = (event) => {
@@ -706,7 +727,7 @@ const expandedRowRender = (record) => {
 const fetchData5 = async (taskid, token) => {
   setLoading(true);
   try {
-    const response = await fetch(`/api/form/${taskid}`, {
+    const response = await fetch(`/api/apiResult/form/${taskid}`, {
       method: 'GET',
       headers: {
         'Authorization': `Bearer ${token}`,
@@ -742,12 +763,24 @@ const renderImages = () => (
   <div className={`${resultstyles.tableImages} ${isImagesVisible ? resultstyles.visible : ''}`}>
     {imgList
       ?.sort((a, b) => a.id - b.id) // 按ID排序
-      .map((img) => (
-        <img
-          key={img.id}
-          src={`data:image/png;base64,${img.img}`}
-          alt={`实验图片-${img.id}`}
-        />
+      .map((img, index) => (
+        <div key={img.id} style={{ position: 'relative', display: 'inline-block' }}>
+          <img
+            src={`data:image/png;base64,${img.img}`}
+            alt={`实验图片-${img.id}`}
+          />
+          <div style={{
+            position: 'absolute',
+            top: 0,
+            left: 0,
+            backgroundColor: 'rgba(0, 0, 0, 0.5)',
+            color: 'white',
+            padding: '5px',
+            fontSize: '14px',
+          }}>
+            {`Table ${index + 1}`}
+          </div>
+        </div>
       ))}
   </div>
 );
@@ -772,7 +805,100 @@ const handleAddTable = () => {
   };
   setHtmlList([...htmlList, newTable]);
 };
+//表格定位修改
+  // 根据imgList计算boxes
+  useEffect(() => {
+    setTimeout(() => {
+    if (imgList && imgList.length > 0) {
+      const boxes = imgList.map((img) => {
+        const axisValues = img.axis.replace(/[[\]]/g, '').split(',').map(Number);
+        return {
+          pageNumber: axisValues[0], // 第几页
+          x: axisValues[1],         // 左上角 x 坐标
+          y: axisValues[2],         // 左上角 y 坐标
+          width: axisValues[3] - axisValues[1], // 宽度（右下角 x - 左上角 x）
+          height: axisValues[4] - axisValues[2], // 高度（右下角 y - 左上角 y）
+        };
+      });
+      setBoxes(boxes);
+    } else {
+      setBoxes([]); // 如果imgList为空，清空boxes
+    }}, 5000);
+  }, [imgList]);
+// 选择表格
+const handleSelectTable = (index) => {
+  if (selectedTables.includes(index)) {
+    setSelectedTables(selectedTables.filter(i => i !== index));
+  } else {
+    setSelectedTables([...selectedTables, index]);
+  }
+};
 
+const normalizeTableHTML = (htmlString) => {
+  const parser = new DOMParser();
+  const doc = parser.parseFromString(htmlString, 'text/html');
+  const table = doc.querySelector('table');
+
+  // 确保 table 包含 thead 和 tbody
+  if (!table.querySelector('thead')) {
+    const thead = doc.createElement('thead');
+    const headerRow = table.querySelector('tr');
+    if (headerRow) {
+      thead.appendChild(headerRow.cloneNode(true));
+      table.insertBefore(thead, table.firstChild);
+    }
+  }
+
+  if (!table.querySelector('tbody')) {
+    const tbody = doc.createElement('tbody');
+    Array.from(table.querySelectorAll('tr')).forEach((row) => {
+      if (row.parentElement !== table.querySelector('thead')) {
+        tbody.appendChild(row.cloneNode(true));
+      }
+    });
+    table.appendChild(tbody);
+  }
+
+  return table.outerHTML;
+};
+const handleMergeTables = () => {
+  if (selectedTables.length < 2) {
+    message.warning('请选择至少两个表格进行合并');
+    return;
+  }
+
+  const [firstIndex, secondIndex] = selectedTables;
+  const firstTableHtml = normalizeTableHTML(htmlList[firstIndex].html);
+  const secondTableHtml = normalizeTableHTML(htmlList[secondIndex].html);
+
+  // 解析 Table1 和 Table2 的 tbody 内容
+  const parseTableBody = (htmlString) => {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(htmlString, 'text/html');
+    const tbody = doc.querySelector('tbody');
+    return tbody ? tbody.innerHTML : '';
+  };
+
+  const firstTableBody = parseTableBody(firstTableHtml);
+  const secondTableBody = parseTableBody(secondTableHtml);
+  console.log(firstTableBody);
+  console.log(secondTableBody);
+  // 合并两个表格的 tbody 内容
+  const mergedHtml = firstTableHtml.replace('</tbody>', `${secondTableBody}</tbody>`);
+  console.log(mergedHtml);
+  // 更新 Table1 的 html 内容
+  const updatedHtmlList = htmlList.map((item, index) => {
+    if (index === firstIndex) {
+      return { ...item, html: mergedHtml }; // 更新 Table1 的 HTML
+    }
+    return item;
+  });
+  console.log(updatedHtmlList);
+  setHtmlList(updatedHtmlList);
+  setSelectedTables([]);
+  setIsMergeModalVisible(false);
+  message.success('表格合并成功');
+};
 
 
   const renderTabContent = () => {
@@ -860,8 +986,11 @@ const handleAddTable = () => {
             <div className={resultstyles.tableHeader}>
               <div className={resultstyles.tableHeaderLeft}>
                 <div className={resultstyles.tableActions}>
-                  <Button shape="circle" icon={<DeleteOutlined />} className={resultstyles.iconButton} />
-                  <Button shape="circle" icon={<SortAscendingOutlined />} className={resultstyles.iconButton} />
+                <Button shape="circle" icon={<DeleteOutlined />} className={resultstyles.iconButton} />
+                <Button shape="circle" icon={<SortAscendingOutlined />} className={resultstyles.iconButton} />
+                <Button shape="circle" icon={<CalculatorOutlined />} className={resultstyles.iconButton} />
+                <Button shape="circle" icon={<AreaChartOutlined />} className={resultstyles.iconButton}onClick={() => setIsMergeModalVisible(true)} />
+                <Button shape="circle" icon={<DatabaseOutlined />} className={resultstyles.iconButton} />
                 </div>
               </div>
               <div className={resultstyles.tableHeaderRight}>
@@ -902,13 +1031,38 @@ const handleAddTable = () => {
               </div>
             </div>
             <div className={resultstyles.dataTable}>
-            {htmlList.map(item => {
+            {htmlList && htmlList.map((item, index) => {
               return (
                 <div key={item.id} className={resultstyles.itemhtml}>
-        
-                  <h3>Table ID: {item.id}</h3>
-                  <EditableTable htmlString={item.html}tableId={item.id} />
+                  <h3>Table {index + 1}</h3> {/* 显示索引，从 1 开始 */}
+                  <EditableTable
+                    htmlString={item.html}
+                    tableId={item.id}
+                    mergeTable={ 
+                      // 仅当该表格是被合并的目标时传递数据
+                      selectedTables[0] === index ? htmlList[selectedTables[1]]?.html : null 
+                    }
+                  />
+                {/* 合并表格的 Modal */}
+                <Modal
+                    title="选择需要合并的表格"
+                    open={isMergeModalVisible}
+                    onOk={handleMergeTables}
+                    onCancel={() => setIsMergeModalVisible(false)}
+                  >
+                    {htmlList.map((item, index) => (
+                      <div key={index}>
+                        <Checkbox
+                          checked={selectedTables.includes(index)}
+                          onChange={() => handleSelectTable(index)}
+                        >
+                          Table {index + 1}
+                        </Checkbox>
+                      </div>
+                    ))}
+                  </Modal>
                 </div>
+                
               );
             })}
           </div>
@@ -1044,8 +1198,10 @@ const handleAddTable = () => {
         showUploadList={false}
         disabled
       >
-          <PDFPreview url={`http://172.20.137.175:90/files/${file}`} />
+           {isPdfReady ? <PDFPreview url={`http://172.20.137.175:90/files/${file}`}
+            boxes={boxes} />: <div className={resultstyles.loading}>正在加载...</div>}
       </Dragger>
+      
     </div >
       {/* 右侧的选项卡内容 */}
       <div className={resultstyles.right}>

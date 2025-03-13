@@ -265,18 +265,30 @@
       }
       .dataTable {
         flex: 1;
-        overflow: auto;
-        overflow-y: auto;
-        overflow-x: auto;
-        .itemhtml{
-          font-weight: bolder;
-          margin-top: 20px;
-          text-align: center;
-          border: #e0e0e0 1px solid;
-          padding: 5px;
-          /* 在样式文件中 */
-        }
-  
+        overflow-y: auto; /* 垂直滚动 */
+        width: 100%; /* 确保父容器宽度占满 */
+      }
+      
+      .itemhtml {
+        width: 100%; /* 宽度占满父容器 */
+        min-width: 100%; /* 最小宽度为父容器的宽度 */
+        overflow-x: auto; /* 水平滚动 */
+        font-weight: bolder;
+        margin-top: 20px;
+        text-align: center;
+        border: #e0e0e0 1px solid;
+        padding: 5px;
+        background-color: white; /* 确保背景色覆盖整个表格 */
+      }
+      
+      .itemhtml table {
+        width: 100%; /* 表格宽度占满父容器 */
+        max-width: 100%; /* 最大宽度不超过父容器 */
+        white-space: nowrap; /* 防止表格内容换行 */
+      }
+      
+      .itemhtml iframe {
+        max-width: 100%; /* iframe 最大宽度不超过父容器 */
       }
     }
 
@@ -331,4 +343,9 @@
   Button{
     margin-left: 5px;
   }
+}
+.redbox {
+  border: 2px solid red;
+  box-sizing: border-box;
+  pointer-events: none; /* 防止红框遮挡交互 */
 }
