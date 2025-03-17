@@ -825,7 +825,7 @@ const handleAddTable = () => {
       setBoxes(boxes);
     } else {
       setBoxes([]); // 如果imgList为空，清空boxes
-    }}, 5000);
+    }}, 50000);
   }, [imgList]);
 // 选择表格
 const handleSelectTable = (index) => {

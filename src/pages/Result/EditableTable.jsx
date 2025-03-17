@@ -8,6 +8,7 @@ import {
   UndoOutlined,
   SaveOutlined,
   MoreOutlined,
+  DeleteFilled,
 } from '@ant-design/icons';
 import resultstyles from './index.module.scss';
 
@@ -184,7 +185,6 @@ useEffect(() => {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
           token: token,
         },
         body: JSON.stringify({
@@ -203,7 +203,29 @@ useEffect(() => {
       message.error('保存失败，请重试！');
     }
   };
-
+  const handleDelete = async () => {
+    try {
+      const response = await fetch(`/api/form/html/${tableId}`, { // 使用模板字符串动态传递 id
+        method: 'DELETE', // 修改为 DELETE 方法
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+          token: token,
+        },
+      });
+  
+      if (response.ok) {
+        message.success('删除成功');
+        // 可选：删除成功后刷新表格数据
+        setTableData({ columns: [], dataSource: [] });
+      } else {
+        message.error('删除失败');
+      }
+    } catch (error) {
+      console.error('删除失败:', error);
+      message.error('删除失败，请重试！');
+    }
+  };
   const generateHtmlFromTableData = (tableData) => {
     const { columns, dataSource } = tableData;
     const header = columns.map((col) => `<th>${col.title}</th>`).join('');
@@ -399,6 +421,9 @@ useEffect(() => {
         </Button>
         <Button icon={<UndoOutlined />} onClick={handleUndo}>
           撤回
+        </Button>
+        <Button icon={<DeleteFilled />} onClick={handleDelete}>
+          删除
         </Button>
         <Button icon={<SaveOutlined />} onClick={handleSave}>
           保存
