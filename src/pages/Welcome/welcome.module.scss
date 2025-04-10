@@ -1,0 +1,148 @@
+@font-face {
+  font-family: '思源黑体';
+  src: url('../../assets/fonts/思源黑体旧字形Bold.woff2') format('woff2'), // 优先加载现代格式
+       url('../../assets/fonts/思源黑体旧字形Bold.ttf') format('truetype');
+  font-display: swap;
+  font-weight: 700; // 明确字重（类似图表标题粗体）
+}
+@font-face {
+  font-family: '优设标题黑';
+  src: url('../../assets/fonts/优设标题黑.woff2') format('woff2'), // 优先加载现代格式
+       url('../../assets/fonts/优设标题黑.ttf') format('truetype');
+  font-display: swap;
+  font-weight: 700; // 明确字重（类似图表标题粗体）
+}
+.welcomecontainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  align-items: flex-start;
+  height: 100vh;
+  background-color: #eff6ff;
+  
+  width: 100%;
+  h1 {
+    font: {
+      family: '思源黑体旧字形', system-ui; // 备用系统字体
+      size: clamp(2rem, 2.5vw, 2.5rem); // 动态缩放
+      weight: 700; // 对应@font-face字重
+    }
+    text-align: left;
+    color: #003366;
+    margin-top: 8vh;
+    margin-bottom: 5vh;
+    width: 42vw;
+
+  }
+  .home{
+    margin-left: 80px;
+    
+  }
+  p {
+
+    text-align: left;
+    color: #000000;
+    margin-top: 0;
+    margin-bottom: 12vh;
+    width: 35vw;
+    font-size: 1.2vw; /* 进一步缩小字体大小 */
+    line-height: 2;
+  }
+
+  .useButton {
+ 
+    border-radius: 8px;
+    background-color: #6ca2f5;
+    color: #ffffff;
+    border: none;
+    width: 15vw;
+    height: 6vh;
+    // padding: 1.8vh 3.5vw;
+    font-size: 1.4vw; /* 按钮字体大小进一步缩小 */
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 18vh;
+    &:hover {
+      background-color: #003366;
+    }
+  }
+
+  .footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+ 
+    ul {
+      display: flex;
+      flex-direction: row;
+      padding: 0;
+      margin: 0;
+      list-style-type: none;
+    }
+
+    li {
+      margin-right: 1.8vw; /* 列表项之间的间隔进一步减小 */
+      font-size: 1vw; /* 列表字体大小进一步减小 */
+      white-space: nowrap;
+      color: #000000;
+      &:last-child {
+        margin-right: 0;
+      }
+    }
+  }
+}
+
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #fff;
+  height: 120px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  .logo {
+    margin-left: 80px;
+    font: {
+      family: '优设标题黑', system-ui; // 备用系统字体
+      size: clamp(1.8rem, 2.5vw, 2.5rem); // 动态缩放
+      weight: 700; // 对应@font-face字重
+    }
+    color: #006bc9; 
+  }
+
+  .navItems {
+    display: flex;
+    align-items: center;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 1.5rem;
+
+    .navigationItem {
+      display: flex;
+      align-items: center;
+      margin-right: 20px;
+      height: 120px;
+      cursor: pointer;
+      .navText {
+        margin-left: 8px;
+      }
+      .experienceButton {
+        width: 150px; /* 设置按钮宽度 */
+        height: 60px;
+        font-size: 1.5rem;
+        color: #006BC9; /* 主题蓝色 */
+        border-style: solid; /* 设置边框样式为实线 */
+        border-color: #006BC9; /* 主题蓝色细框 */
+        background-color: transparent; /* 无填充色 */
+        margin-right: 30px;  
+      }
+    }
+   
+  }
+
+ 
+}

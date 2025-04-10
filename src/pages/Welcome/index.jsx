@@ -57,7 +57,7 @@
 // export default Welcome;
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom'; // 导入 useNavigate 钩子
-import welcomestyles from './index.module.scss';
+import welcomestyles from './welcome.module.scss';
 import { Outlet } from 'react-router-dom';
 function Welcome() {
   const [windowWidth, setWindowWidth] = useState(window.innerWidth);

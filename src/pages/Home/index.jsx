@@ -1,5 +1,5 @@
 // Home.jsx
-import styles from "./index.module.scss";
+import styles from "./home.module.scss";
 import FeatureCard from "./component/FeatureCard";
 import MoreFeatures from "./component/MoreFeatures";
 import image1 from "../../assets/img/image1.png";
@@ -16,7 +16,7 @@ const Home = () => {
         "在多个项目数据上体现较好的相关性，支持指导分子筛选和优化"
       ],
       imageSrc: image1,
-      to: "/task" // 设置跳转路径
+      to: "/task/tab" // 设置跳转路径
     },
     {
       title: "专利自动撰写",

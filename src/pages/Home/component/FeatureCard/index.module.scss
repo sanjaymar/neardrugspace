@@ -4,7 +4,7 @@
   padding: 2rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
   transition: transform 0.2s;
-  height: 30vh;
+  height: 38vh;
   width: 40vw;
   position: relative; // 添加相对定位以便按钮绝对定位
   .title {
@@ -48,6 +48,7 @@
 
       .button {
         background: #3498db;
+        margin-top: 20px;
         color: white;
         padding: 0.5rem 1rem; // 缩小按钮尺寸
         text-align: center;

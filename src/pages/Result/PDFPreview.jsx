@@ -3,7 +3,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { message } from 'antd';
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css'; // 确保文本层不会多余显示
-import mainStyles from './index.module.scss';
+import mainStyles from './result.module.scss';
 
 // 设置 worker 路径为本地静态文件
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
@@ -39,7 +39,7 @@ function PDFPreview({ url, boxes }) {
 
           return (
             <div key={`page_${pageNumber}`} style={{ position: 'relative' }}>
-              <Page pageNumber={pageNumber} scale={2} width={300} />
+              <Page pageNumber={pageNumber} scale={2.7} width={228} />
               {isBoxVisible &&
                 boxes
                   .filter((box) => box.pageNumber === pageNumber) // 过滤出当前页的 boxes

@@ -1,6 +1,6 @@
 import React, { useState } from 'react'; // 确保导入 useState 钩子
 import { useNavigate } from 'react-router-dom'; // 确保导入 useNavigate
-import loginstyles from './index.module.scss'; // 确保样式文件路径正确
+import loginstyles from './login.module.scss'; // 确保样式文件路径正确
 import { message } from 'antd';  // 引入 antd 的 message 组件
 function Login() {
   const navigate = useNavigate();

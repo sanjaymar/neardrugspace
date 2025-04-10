@@ -3,7 +3,7 @@ import { CommentOutlined, HomeFilled, MacCommandOutlined,LoginOutlined } from '@
 import { Button } from 'antd';
 import { useNavigate } from 'react-router';
 import { useEffect, useState } from 'react';
-import styles from './index.module.scss';
+import styles from '../welcome.module.scss';
 
 function WelcomeHeader(props) {
   const navigate = useNavigate();

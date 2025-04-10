@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import resetstyles from './index.module.scss';
+import resetstyles from '../Login/login.module.scss';
 import { message } from 'antd';  // 引入 antd 的 message 组件
 function Reset() {
   const navigate = useNavigate();

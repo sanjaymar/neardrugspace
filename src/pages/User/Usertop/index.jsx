@@ -1,7 +1,7 @@
 import { Outlet } from 'react-router'
 
 
-import usertopstyles from './index.module.scss'
+import usertopstyles from '../../Login/login.module.scss'
 
 function Usertop() {
 

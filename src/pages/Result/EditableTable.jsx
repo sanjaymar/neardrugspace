@@ -10,7 +10,7 @@ import {
   MoreOutlined,
   DeleteFilled,
 } from '@ant-design/icons';
-import resultstyles from './index.module.scss';
+import resultstyles from './result.module.scss';
 
 const token = localStorage.getItem('token');
 

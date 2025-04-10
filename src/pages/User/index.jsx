@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Card, Button, Input, Form, Row, Col, Space } from 'antd';
 import { ArrowLeftOutlined } from '@ant-design/icons'; // 导入返回图标
-import userstyles from './index.module.scss';
+import userstyles from './user.module.scss';
 
 function User() {
   const navigate = useNavigate();
@@ -33,7 +33,7 @@ function User() {
   };
 
   const handleBack = () => {
-    navigate('/main'); // 导航到 /main 页面
+    navigate('/task/tab'); // 导航到 /task/tab 页面
   };
 
   return (

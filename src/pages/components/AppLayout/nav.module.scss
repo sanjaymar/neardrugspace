@@ -1,0 +1,171 @@
+@font-face {
+  font-family: '优设标题黑';
+  src: url('../../assets/fonts/优设标题黑.woff2') format('woff2'),
+       url('../../assets/fonts/优设标题黑.ttf') format('truetype');
+  font-display: swap;
+  font-weight: 700;
+}
+
+// 颜色变量 - 基于图像分析
+$primary-blue: #006bc9;       // 主蓝色，用于logo和重要元素
+$hover-blue: #1890ff;        // 悬停蓝色
+$panel-blue: #f1f6ff;        // 浅蓝背景色
+$white: #ffffff;             // 纯白色
+$black: #333333;             // 主文字颜色
+
+
+// 尺寸变量
+$header-height: 64px;
+$sider-width: 10px;
+$sider-collapsed-width: 10px;
+$content-padding: 24px;
+
+// 头部样式 - 调整为白色背景，符合图像中的简洁风格
+.header {
+  height: $header-height;
+  line-height: $header-height;
+  background: $white;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); // 添加轻微阴影增强层次感
+  position: fixed;
+  width: 100%;
+  z-index: 1000;
+  
+  .headerContent {
+    display: flex;
+    height: 100%;
+    margin: 0 auto;
+    padding: 0 24px;
+  }
+}
+
+// Logo样式 - 使用优设标题黑，保持专业感
+.logo {
+
+  flex:1;
+  font: {
+    family: '优设标题黑', system-ui;
+    size: 1.8rem;
+    weight: 700;
+
+  }
+  line-height: 64px;
+  color: $primary-blue;
+  letter-spacing: 1px; // 增加字间距提升可读性
+  
+  @media (min-width: 768px) {
+    font-size: 2rem;
+  }
+}
+
+// 主导航 - 调整为图像中的水平导航样式
+.mainNav {
+
+  ul {
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    gap: 32px; // 使用gap替代margin增加间距
+  }
+}
+
+// 导航项 - 添加平滑过渡效果
+.navItem {
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: 0.9rem;
+  color: $black;
+  
+  &:hover {
+    color: $hover-blue;
+  }
+  
+  svg, .anticon {
+    margin-right: 8px;
+    font-size: 1rem;
+  }
+  
+  @media (min-width: 768px) {
+    padding: 0 16px;
+    font-size: 1rem;
+  }
+}
+
+// 活动状态 - 更明显的视觉反馈
+.active {
+  color: $primary-blue;
+  font-weight: 600;
+  position: relative;
+  
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60%;
+    height: 3px;
+    background: $primary-blue;
+    border-radius: 3px;
+  }
+}
+.sider{
+  background-color: $panel-blue;
+ width: 3vw !important;
+}
+.nav {
+  background-color: #A2D4FF;
+  width: 3vw;
+  height: 80vh;
+  margin-top: 120px;
+  position: relative;
+  border-radius: 2vw;
+  overflow: hidden;
+
+  ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    li{
+      margin-top: 1vh;
+    }
+  }
+
+  .navItem {
+    position: relative;
+    display: flex;
+    align-items: center;
+    flex-wrap: nowrap;
+    margin-bottom: 2vh; /* Add space between items */
+  }
+
+  .link {
+    color: white;
+    text-decoration: none;
+    margin-top: 1vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.3s ease;
+    
+    .icon {
+      font-size: 1.8vw; /* 增大图标的大小 */
+      &:hover {
+        color: #336699; /* 调整颜色 */
+      }
+  
+    }
+  }
+}
+// 内容区域 - 添加浅蓝背景和圆角
+.content {
+  overflow-y: auto;
+  margin-top: $header-height;
+  padding: $content-padding;
+  height: calc(100vh - #{$header-height });
+  background: $panel-blue;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s;
+
+}

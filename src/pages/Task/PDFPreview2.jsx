@@ -3,7 +3,7 @@ import { Document, Page, pdfjs } from 'react-pdf';
 import { StarFilled } from '@ant-design/icons'; // 引入五角星图标
 import 'react-pdf/dist/esm/Page/AnnotationLayer.css';
 import 'react-pdf/dist/esm/Page/TextLayer.css';
-import styles from './index.module.scss'; // 引入 CSS 模块
+import styles from './task.module.scss'; // 引入 CSS 模块
 
 // 设置 worker 路径为本地静态文件
 pdfjs.GlobalWorkerOptions.workerSrc = '/pdf.worker.min.js';
